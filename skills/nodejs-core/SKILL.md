@@ -51,6 +51,7 @@ Read individual rule files for detailed explanations and code examples:
 
 - [rules/build-system.md](rules/build-system.md) - gyp, ninja, make, cross-platform compilation
 - [rules/contributing.md](rules/contributing.md) - How to contribute to Node.js core, the process
+- [rules/commit-messages.md](rules/commit-messages.md) - Node.js-style commit message formatting and validation
 
 ### Debugging & Profiling
 

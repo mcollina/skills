@@ -1,0 +1,47 @@
+---
+name: commit-messages
+description: Node.js-style commit message formatting and validation
+metadata:
+  tags: commit-message, git, contributing, nodejs-core
+---
+
+# Commit Message Formatting
+
+Use the Node.js commit style for changes affecting Node.js core or Node.js-core-like repositories.
+
+## Required format
+
+```text
+subsystem: short imperative description
+
+Longer explanation of the change if needed.
+
+Fixes: https://github.com/nodejs/node/issues/12345
+Refs: https://github.com/nodejs/node/pull/12344
+```
+
+Examples of subsystem prefixes:
+
+- `fs:`
+- `stream:`
+- `http:`
+- `crypto:`
+- `test:`
+- `doc:`
+- `build:`
+
+## Validate before pushing
+
+Use `core-validate-commit` to check commit message format:
+
+- Package: https://www.npmjs.com/package/core-validate-commit
+
+```bash
+# Validate last commit message
+git log -1 --pretty=%B | npx core-validate-commit
+
+# Validate a message draft
+printf "fs: fix race in readdir\n\nFixes: https://github.com/nodejs/node/issues/12345\n" | npx core-validate-commit
+```
+
+If validation fails, amend the commit message and re-run validation.
