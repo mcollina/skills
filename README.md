@@ -8,6 +8,7 @@ Skills for AI-assisted development.
 |-------|-------------|
 | `documentation` | Technical writer specializing in the Diátaxis documentation framework |
 | `fastify` | Comprehensive best practices for Fastify development |
+| `linting-neostandard-eslint9` | Linting workflows with neostandard and ESLint v9 flat config |
 | `node` | Best practices for Node.js development |
 | `nodejs-core` | Deep Node.js internals expertise including C++ addons, V8, libuv, and build systems |
 | `oauth` | OAuth 2.0/2.1 specification expert with deep RFC knowledge and Fastify integration patterns |
