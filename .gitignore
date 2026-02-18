@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # GitHuman
 .githuman
+
+# AI
+.pi
