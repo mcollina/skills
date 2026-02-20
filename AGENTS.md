@@ -23,6 +23,7 @@ Current top-level skills include:
 - `nodejs-core`
 - `oauth`
 - `octocat`
+- `snipgrapher`
 - `typescript-magician`
 
 ### 2) Minimal TypeScript package surface (`src/`)
