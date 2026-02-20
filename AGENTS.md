@@ -23,6 +23,7 @@ Current top-level skills include:
 - `nodejs-core`
 - `oauth`
 - `octocat`
+- `snipgrapher`
 - `typescript-magician`
 
 ### 2) Minimal TypeScript package surface (`src/`)
@@ -49,7 +50,8 @@ Run from repository root.
 ## Editing rules for this repo
 
 1. Treat `skills/*/SKILL.md` as an index contract.
-   - If you add/rename/remove any `rules/*.md`, update the corresponding links in `SKILL.md`.
+   - Every `rules/*.md` file must be explicitly mentioned and linked from that skill’s main `SKILL.md`.
+   - If you add/rename/remove any `rules/*.md`, update the corresponding links in `SKILL.md` in the same change.
 
 2. Preserve skill metadata/frontmatter format.
    - Skill and rule docs use YAML frontmatter (`name`, `description`, `metadata.tags`).
