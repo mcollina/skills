@@ -1,6 +1,6 @@
 ---
-name: fastify-best-practices
-description: Comprehensive best practices for Fastify development
+name: fastify
+description: Provides Fastify best practices for plugins, routes, schemas, hooks, testing, and deployment. Use when developing or reviewing Fastify applications.
 metadata:
   tags: fastify, nodejs, typescript, backend, api, server, http
 ---

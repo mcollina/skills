@@ -1,6 +1,6 @@
 ---
 name: octocat
-description: Git and GitHub wizard using gh CLI for all git operations and GitHub interactions
+description: Performs git operations and GitHub interactions using gh CLI. Use when creating PRs, resolving merge conflicts, managing branches, or fixing pre-commit hooks.
 metadata:
   tags: git, github, gh-cli, version-control, merge-conflicts, pull-requests
 ---
@@ -56,19 +56,10 @@ GitHub operations via gh CLI:
 - Configure repository settings
 - Automate workflows and notifications
 
-## PR Body Formatting (Important)
+## PR Body Formatting
 
-When creating PRs with `gh pr create`, the `--body` flag has escaping issues with newlines. The `\n` sequences get escaped as literal characters instead of actual newlines.
+Always use `--body-file` for multi-line PR bodies to avoid newline escaping issues:
 
-### The Problem
-❌ This produces literal `\n` in the PR body:
-```bash
-gh pr create --body "Line 1\nLine 2\nLine 3"
-```
-
-### Solutions
-
-**Option 1: Use `--body-file` (Recommended)**
 ```bash
 cat > /tmp/pr-body.md << 'EOF'
 Line 1
@@ -78,31 +69,6 @@ Line 3
 EOF
 gh pr create --body-file /tmp/pr-body.md
 ```
-
-**Option 2: Use `printf` with proper escaping**
-```bash
-gh pr create --body "$(printf 'Line 1\n\nLine 2\nLine 3')"
-```
-
-**Option 3: Use `echo -e` (works in bash)**
-```bash
-gh pr create --body "$(echo -e "Line 1\n\nLine 2\nLine 3")"
-```
-
-**Option 4: Multi-line with heredoc in shell**
-```bash
-body=$(cat << 'EOF'
-Line 1
-
-Line 2
-Line 3
-EOF
-)
-gh pr create --body "$body"
-```
-
-### Best Practice
-For complex PR descriptions with formatting, always use `--body-file` with a temporary file. It's cleaner, more reliable, and easier to debug.
 
 Pre-commit hook philosophy:
 - Fix linting errors directly when possible
