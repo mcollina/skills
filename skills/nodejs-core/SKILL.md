@@ -1,6 +1,6 @@
 ---
 name: nodejs-core
-description: Deep Node.js internals expertise including C++ addons, V8, libuv, and build systems
+description: Provides deep Node.js internals guidance for V8, libuv, C++ addons, native memory, and build systems. Use when debugging native code, profiling V8, or contributing to Node.js core.
 metadata:
   tags: nodejs, v8, libuv, cpp, native-addons, performance, debugging, internals
 ---

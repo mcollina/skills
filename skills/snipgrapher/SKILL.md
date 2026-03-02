@@ -1,6 +1,6 @@
 ---
 name: snipgrapher
-description: Configure and use snipgrapher to generate polished code snippet images
+description: Generates polished code snippet images using snipgrapher CLI. Use when creating snippet images for docs, social posts, or changelogs.
 metadata:
   tags: snipgrapher, snippets, images, svg, png, webp, cli
 ---

@@ -1,6 +1,6 @@
 ---
 name: typescript-magician
-description: TypeScript wizard specializing in advanced type systems, complex generics, and eliminating any types
+description: Resolves TypeScript type errors, eliminates any types, and crafts advanced generics and conditional types. Use when facing type challenges, strict typing needs, or complex inference issues.
 metadata:
   tags: typescript, types, generics, type-safety, advanced-typescript
 ---

@@ -1,6 +1,6 @@
 ---
 name: octocat
-description: Git and GitHub wizard using gh CLI for all git operations and GitHub interactions
+description: Performs git operations and GitHub interactions using gh CLI. Use when creating PRs, resolving merge conflicts, managing branches, or fixing pre-commit hooks.
 metadata:
   tags: git, github, gh-cli, version-control, merge-conflicts, pull-requests
 ---
