@@ -20,11 +20,10 @@ Current top-level skills include:
 - `documentation`
 - `fastify`
 - `node`
-- `nodejs-core`
-- `oauth`
 - `octocat`
-- `snipgrapher`
 - `typescript-magician`
+
+> Note: `nodejs-core`, `oauth`, `snipgrapher`, and `linting-neostandard-eslint9` have been removed from this fork.
 
 ### 2) Minimal TypeScript package surface (`src/`)
 
@@ -50,19 +49,14 @@ Run from repository root.
 ## Editing rules for this repo
 
 1. Treat `skills/*/SKILL.md` as an index contract.
-   - Every `rules/*.md` file must be explicitly mentioned and linked from that skill’s main `SKILL.md`.
-   - If you add/rename/remove any `rules/*.md`, update the corresponding links in `SKILL.md` in the same change.
+    - Every `rules/*.md` file must be explicitly mentioned and linked from that skill’s main `SKILL.md`.
+    - If you add/rename/remove any `rules/*.md`, update the corresponding links in `SKILL.md` in the same change.
 
 2. Preserve skill metadata/frontmatter format.
-   - Skill and rule docs use YAML frontmatter (`name`, `description`, `metadata.tags`).
+    - Skill and rule docs use YAML frontmatter (`name`, `description`, `metadata.tags`).
 
 3. Keep naming consistent with existing directory structure.
-   - Add new guidance under an existing skill’s `rules/` unless you are intentionally creating a new skill.
+    - Add new guidance under an existing skill’s `rules/` unless you are intentionally creating a new skill.
 
 4. Validate changes with project scripts.
-   - At minimum run `npm run typecheck` and `npm test` after substantial edits.
-
-## Existing agent/tooling constraints found in repo
-
-- `.claude/settings.local.json` allows `npx githuman:*` commands for Claude-specific workflows.
-- `.githuman/` is intentionally gitignored project tooling state.
+    - At minimum run `npm run typecheck` and `npm test` after substantial edits.
