@@ -18,7 +18,7 @@ function hashPasswordSync(password: string): string {
 }
 
 // GOOD - async operation
-async function hashPassword(password: string): Promise<string> {
+function hashPassword(password: string): Promise<string> {
   return new Promise((resolve, reject) => {
     crypto.pbkdf2(password, salt, 100000, 64, 'sha512', (err, key) => {
       if (err) reject(err);
