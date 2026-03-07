@@ -1,6 +1,6 @@
 ---
 name: linting-neostandard-eslint9
-description: Linting workflows with neostandard and ESLint v9 flat config
+description: Configures linting with neostandard and ESLint v9 flat config. Use when setting up linting, migrating from standard or legacy eslintrc, or integrating lint checks in CI.
 metadata:
   tags: linting, neostandard, eslint, eslint9, flat-config, javascript, typescript
 ---

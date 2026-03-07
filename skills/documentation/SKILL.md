@@ -1,6 +1,6 @@
 ---
 name: documentation
-description: Technical writer specializing in the Diátaxis documentation framework
+description: Creates and reviews technical documentation following the Diátaxis framework (tutorials, how-to guides, reference, explanations). Use when writing, restructuring, or improving user-facing documentation.
 metadata:
   tags: documentation, technical-writing, tutorials, guides, reference, diataxis
 ---

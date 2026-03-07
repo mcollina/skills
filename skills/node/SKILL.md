@@ -1,6 +1,6 @@
 ---
-name: node-best-practices
-description: Best practices for Node.js development with TypeScript using type stripping
+name: node
+description: Provides Node.js best practices for TypeScript with type stripping, error handling, streams, testing, and performance. Use when writing or reviewing Node.js backend code.
 metadata:
   tags: node, nodejs, javascript, typescript, type-stripping, backend, server
 ---

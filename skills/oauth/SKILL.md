@@ -1,6 +1,6 @@
 ---
 name: oauth
-description: OAuth 2.0/2.1 specification expert with deep RFC knowledge and Fastify integration patterns
+description: Provides OAuth 2.0/2.1 spec-compliant guidance with Fastify integration patterns. Use when implementing authorization flows, token validation, PKCE, or OAuth security best practices.
 metadata:
   tags: oauth, oauth2, security, authentication, authorization, jwt, fastify
 ---
