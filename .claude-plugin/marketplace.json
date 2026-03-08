@@ -1,0 +1,81 @@
+{
+	"name": "matteo-collina-skills",
+	"description": "Best practices and skills for Node.js development",
+	"version": "1.0.0",
+	"owner": {
+		"name": "Matteo Collina",
+		"email": "hello@matteocollina.com"
+	},
+	"plugins": [
+		{
+			"name": "documentation",
+			"description": "Technical writer specializing in the Diátaxis documentation framework",
+			"category": "productivity",
+			"source": "./",
+			"skills": ["./skills/documentation"]
+		},
+		{
+			"name": "fastify",
+			"description": "Comprehensive best practices for Fastify development",
+			"category": "development",
+			"source": "./",
+			"skills": ["./skills/fastify"]
+		},
+		{
+			"name": "init",
+			"description": "Create or refine a minimal, high-signal AGENTS.md for any repository",
+			"category": "productivity",
+			"source": "./",
+			"skills": ["./skills/init"]
+		},
+		{
+			"name": "linting-neostandard-eslint9",
+			"description": "Linting workflows with neostandard and ESLint v9 flat config",
+			"category": "development",
+			"source": "./",
+			"skills": ["./skills/linting-neostandard-eslint9"]
+		},
+		{
+			"name": "node",
+			"description": "Best practices for Node.js development",
+			"category": "development",
+			"source": "./",
+			"skills": ["./skills/node"]
+		},
+		{
+			"name": "nodejs-core",
+			"description": "Deep Node.js internals expertise including C++ addons, V8, libuv, and build systems",
+			"category": "development",
+			"source": "./",
+			"skills": ["./skills/nodejs-core"]
+		},
+		{
+			"name": "oauth",
+			"description": "OAuth 2.0/2.1 specification expert with deep RFC knowledge and Fastify integration patterns",
+			"category": "development",
+			"source": "./",
+			"skills": ["./skills/oauth"]
+		},
+		{
+			"name": "octocat",
+			"description": "Git and GitHub wizard using gh CLI for all git operations and GitHub interactions",
+			"category": "productivity",
+			"source": "./",
+			"skills": ["./skills/octocat"]
+		},
+		{
+			"name": "snipgrapher",
+			"description": "Configure and use snipgrapher to generate polished code snippet images",
+			"category": "productivity",
+			"source": "./",
+			"skills": ["./skills/snipgrapher"]
+		},
+		{
+			"name": "typescript-magician",
+			"description": "TypeScript wizard specializing in advanced type systems, complex generics, and eliminating `any` types",
+			"category": "development",
+			"source": "./",
+			"skills": ["./skills/typescript-magician"]
+		}
+	]
+}
