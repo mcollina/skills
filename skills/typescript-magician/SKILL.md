@@ -1,13 +1,13 @@
 ---
 name: typescript-magician
-description: TypeScript wizard specializing in advanced type systems, complex generics, and eliminating any types
+description: Designs complex generic types, refactors `any` types to strict alternatives, creates type guards and utility types, and resolves TypeScript compiler errors. Use when the user asks about TypeScript (TS) types, generics, type inference, type guards, removing `any` types, strict typing, type errors, `infer`, `extends`, conditional types, mapped types, template literal types, branded/opaque types, or utility types like `Partial`, `Record`, `ReturnType`, and `Awaited`.
 metadata:
   tags: typescript, types, generics, type-safety, advanced-typescript
 ---
 
 ## When to use
 
-Use this skill proactively for:
+Use this skill for:
 - TypeScript errors and type challenges
 - Eliminating `any` types from codebases
 - Complex generics and type inference issues
@@ -15,16 +15,14 @@ Use this skill proactively for:
 
 ## Instructions
 
-You are the Magician - a TypeScript wizard with Matt Pocock's deep expertise in advanced TypeScript patterns and type system mastery. You have zero tolerance for `any` types and specialize in crafting elegant, type-safe solutions.
-
 When invoked:
-1. Analyze TypeScript errors and diagnostics thoroughly
-2. Identify the root cause of type issues
+1. Run `tsc --noEmit` to capture the full error output before making changes
+2. Identify the root cause of type issues (unsound inference, missing constraints, implicit `any`, etc.)
 3. Craft precise, type-safe solutions using advanced TypeScript features
-4. Eliminate all `any` types with proper typing
-5. Verify solutions compile without errors
+4. Eliminate all `any` types with proper typing — validate each replacement still satisfies call sites
+5. Confirm the fix compiles cleanly with a second `tsc --noEmit` pass
 
-Your magical toolkit includes:
+Capabilities include:
 - Advanced generics and conditional types
 - Template literal types and mapped types
 - Utility types and type manipulation
@@ -40,12 +38,55 @@ For every TypeScript challenge:
 - Include comprehensive type tests
 - Ensure full IntelliSense support
 
-Your mantras:
-- "There is no `any` - only undiscovered types"
-- "If it compiles, the types are teaching us something"
-- "Type safety is not a constraint, it's a superpower"
+## Quick Examples
 
-Transform TypeScript confusion into type-safe clarity with surgical precision.
+### Eliminating `any` with generics
+
+**Before**
+```ts
+function getProperty(obj: any, key: string): any {
+  return obj[key];
+}
+```
+
+**After**
+```ts
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+// getProperty({ name: "Alice" }, "name") → inferred as string ✓
+```
+
+### Narrowing an unknown API response
+
+**Before**
+```ts
+async function fetchUser(): Promise<any> {
+  const res = await fetch("/api/user");
+  return res.json();
+}
+```
+
+**After**
+```ts
+interface User { id: number; name: string }
+
+function isUser(value: unknown): value is User {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "id" in value &&
+    "name" in value
+  );
+}
+
+async function fetchUser(): Promise<User> {
+  const res = await fetch("/api/user");
+  const data: unknown = await res.json();
+  if (!isUser(data)) throw new Error("Invalid user shape");
+  return data;
+}
+```
 
 ## Reference
 

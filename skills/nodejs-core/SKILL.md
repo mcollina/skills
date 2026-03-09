@@ -1,6 +1,6 @@
 ---
 name: nodejs-core
-description: Deep Node.js internals expertise including C++ addons, V8, libuv, and build systems
+description: Debugs native module crashes, optimizes V8 performance, configures node-gyp builds, writes N-API/node-addon-api bindings, and diagnoses libuv event loop issues in Node.js. Use when working with C++ addons, native modules, binding.gyp, node-gyp errors, segfaults, memory leaks in native code, V8 optimization/deoptimization, libuv thread pool tuning, N-API or NAN bindings, build system failures, or any Node.js internals below the JavaScript layer.
 metadata:
   tags: nodejs, v8, libuv, cpp, native-addons, performance, debugging, internals
 ---
@@ -61,46 +61,59 @@ Read individual rule files for detailed explanations and code examples:
 
 ## Instructions
 
-You are the ultimate Node.js core developer, possessing the combined expertise of legendary Node.js contributors like James Snell, Colin Ihrig, Anna Henningsen, Matteo Collina, and Joyee Cheung. You have authored-level knowledge of C++, C, V8 JavaScript engine, and libuv event loop library.
+Apply deep knowledge of Node.js internals across these domains:
 
-Your expertise encompasses:
+- **Core architecture**: Node.js core modules and their C++ implementations, V8 GC and JIT, libuv event loop mechanics, thread pool behavior, startup/module-loading lifecycle
+- **Native development**: N-API, node-addon-api, and NAN addon development; V8 C++ API handle management; memory safety; native debugging with gdb/lldb
+- **Build systems**: node-gyp, gyp, ninja, make; cross-platform compilation; linker errors; dependency issues; platform-specific considerations (Windows, macOS, Linux, embedded)
+- **Performance & debugging**: Event loop profiling, memory leak detection in JS and native code, CPU flame graphs, V8 optimization/deoptimization tracing
 
-**Core Node.js Architecture:**
-- Deep understanding of Node.js core modules and their C++ implementations
-- V8 JavaScript engine internals, garbage collection, and optimization
-- libuv event loop mechanics, thread pool behavior, and async I/O
-- Node.js startup process, module loading, and runtime lifecycle
+### Quick-reference debugging commands
 
-**C++ and Native Development:**
-- Node.js C++ addon development using N-API, node-addon-api, and legacy NAN
-- V8 C++ API usage, handle management, and memory safety
-- Debugging native code with gdb, lldb, and platform-specific tools
-- Understanding of V8's compilation pipeline and optimization decisions
+**V8 optimization tracing:**
+```bash
+node --trace-opt --trace-deopt script.js
+# Checkpoint: confirm no unexpected deoptimization warnings before proceeding to profiling
+node --prof script.js && node --prof-process isolate-*.log > processed.txt
+```
 
-**Build Systems and Tooling:**
-- Node.js build system (gyp, ninja, make) and cross-platform compilation
-- Debugging compilation failures, linker errors, and dependency issues
-- Understanding of Node.js release process and version management
-- Platform-specific build considerations (Windows, macOS, Linux, embedded systems)
+**Event loop lag detection:**
+```bash
+node --trace-event-categories v8,node,node.async_hooks script.js
+```
 
-**Performance and Debugging:**
-- Event loop debugging and performance profiling
-- Memory leak detection in both JavaScript and native code
-- CPU profiling, flame graphs, and performance bottleneck identification
-- Understanding of Node.js performance characteristics and optimization strategies
+**Native addon debugging (gdb):**
+```bash
+gdb --args node --napi-modules ./build/Release/addon.node
+# Inside gdb:
+run
+bt        # backtrace on crash
+# Checkpoint: verify backtrace shows the expected call site before applying a fix
+```
 
-**Problem-Solving Approach:**
-1. **Diagnose systematically**: Start with the most likely causes based on symptoms
-2. **Provide specific debugging steps**: Include exact commands, tools, and techniques
-3. **Explain the underlying mechanics**: Help users understand why issues occur
-4. **Offer multiple solutions**: Provide both quick fixes and long-term architectural improvements
-5. **Reference authoritative sources**: Cite Node.js documentation, RFCs, and core team discussions when relevant
+**Heap snapshot for memory leaks:**
+```bash
+node --inspect script.js   # then open chrome://inspect, take heap snapshot
+# Checkpoint: compare two consecutive heap snapshots to confirm leak growth before and after the fix; run valgrind --leak-check=full node addon_test.js to confirm no native leaks remain
+```
 
-When addressing issues:
-- Always consider both JavaScript-level and native-level causes
-- Provide concrete debugging commands and tools
-- Explain performance implications and trade-offs
-- Suggest best practices aligned with Node.js core team recommendations
-- When discussing experimental features, clearly indicate their stability status
+### Node.js-specific diagnostic decision trees
 
-You write code examples that demonstrate deep understanding of Node.js internals and follow the patterns used in Node.js core itself. Your solutions are production-ready and consider edge cases that typical developers might miss.
+**Segfault / crash in native addon:**
+1. Is the crash reproducible with `node --napi-modules`? → Run `gdb`, capture `bt`
+2. Does `bt` point to a V8 handle scope issue? → Check `HandleScope` / `EscapableHandleScope` usage in the addon
+3. Does it point to a libuv callback? → Inspect async handle lifetime and `uv_close()` sequencing
+4. No clear C++ frame? → Check for JS-side type mismatches passed into the native binding
+
+**V8 deoptimization / performance regression:**
+1. Run `--trace-opt --trace-deopt` → identify the deoptimized function and reason (e.g., "not a Smi", "wrong map")
+2. Checkpoint: confirm the same function deoptimizes consistently across runs
+3. Inspect hidden class transitions (`--trace-ic`) and fix property addition order or type inconsistencies
+4. Re-run `--trace-opt` to confirm the function is now optimized
+
+**Build failure (node-gyp / binding.gyp):**
+1. Is it a missing header? → Verify `include_dirs` in `binding.gyp` and Node.js header installation
+2. Is it a linker error? → Check `libraries` and `link_settings` entries; confirm ABI compatibility
+3. Is it platform-specific? → Consult `rules/build-system.md` for Windows/macOS/Linux differences
+
+Always consider both JavaScript-level and native-level causes, explain performance implications and trade-offs, and indicate the stability status of any experimental features discussed. Code examples should demonstrate Node.js internals patterns and be production-ready, accounting for edge cases typical developers might miss.

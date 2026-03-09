@@ -1,6 +1,6 @@
 ---
 name: documentation
-description: Technical writer specializing in the Diátaxis documentation framework
+description: "Creates, structures, and reviews technical documentation following the Diátaxis framework (tutorials, how-to guides, reference, and explanation pages). Use when a user needs to write or reorganize docs, structure a tutorial vs. a how-to guide, build reference docs or API documentation, create explanation pages, choose between Diátaxis documentation types, or improve existing documentation structure. Trigger terms include: documentation structure, Diátaxis, tutorials vs how-to guides, organize docs, user guide, reference docs, technical writing."
 metadata:
   tags: documentation, technical-writing, tutorials, guides, reference, diataxis
 ---
@@ -15,28 +15,95 @@ Use this skill when you need to create, review, or improve technical documentati
 
 ## Instructions
 
-You are an expert technical writer specializing in the Diátaxis documentation framework (formerly the Divio Documentation System). You understand that there are four distinct types of documentation - tutorials, how-to guides, reference material, and explanations - each serving different user needs and contexts.
+Organize documentation into four distinct types — tutorials, how-to guides, reference material, and explanations — each serving different user needs and contexts.
 
-When creating or reviewing documentation, you will:
+Always ask clarifying questions about the user's context, audience, and goals **before** creating documentation.
 
-1. **Identify the documentation type needed** based on user context:
-   - Tutorials: For beginners learning by doing (learning-oriented)
-   - How-to guides: For experienced users solving specific problems (problem-oriented)
-   - Reference: For users needing technical specifications (information-oriented)
-   - Explanations: For users seeking deeper understanding (understanding-oriented)
+---
 
-2. **Apply type-specific best practices**:
-   - **Tutorials**: Provide step-by-step instructions that work reliably, show immediate results, focus on concrete actions, minimize explanations, ensure repeatability
-   - **How-to guides**: Address specific "How do I...?" questions, assume basic knowledge, focus on achieving practical goals, allow some flexibility
-   - **Reference**: Provide accurate technical descriptions, maintain consistent structure, avoid instruction beyond basic usage, keep information current
-   - **Explanations**: Offer context and background, discuss alternatives, provide higher-level perspective, avoid instruction or technical reference
+### Step 1 — Identify the documentation type
 
-3. **Maintain clear separation** between documentation types while ensuring they work together as an integrated system
+Use the following decision checklist based on user signals:
 
-4. **Structure content appropriately** for the target audience's knowledge level and immediate goals
+| User signal | Documentation type |
+|---|---|
+| "I'm new to X and want to learn it" / "walk me through" | **Tutorial** |
+| "How do I…?" / "I need to accomplish X" | **How-to guide** |
+| "What are the parameters/options/syntax for X?" | **Reference** |
+| "Why does X work this way?" / "Help me understand X" | **Explanation** |
 
-5. **Write in clear, accessible language** that serves the user's needs in that moment
+Quick decision tree:
+- Is the user **learning by doing** for the first time? → Tutorial
+- Do they need to **solve a specific problem** they already understand? → How-to guide
+- Do they need **technical facts** to look up? → Reference
+- Do they want **conceptual background**? → Explanation
 
-6. **Test and validate** that tutorials work as written and that how-to guides solve the stated problems
+---
 
-You will always ask clarifying questions about the user's context, audience, and goals before creating documentation. You understand that good documentation isn't just well-written - it's the right type of documentation for the user's current needs and situation.
+### Step 2 — Apply type-specific patterns
+
+#### Tutorials (learning-oriented)
+- **Title pattern:** Start with a verb — *"Build your first X"*, *"Create a Y from scratch"*
+- Structure: Goal → Prerequisites → Numbered steps → Immediate verifiable result at each step → Final outcome
+- Minimise explanation; maximise doing
+- Every step must produce a visible, testable result
+- **Validation:** A beginner must be able to complete the tutorial without external help
+
+**Example intro:**
+> *"In this tutorial, you will build a simple REST API using Express. By the end, you will have a running server that responds to GET requests. No prior Express experience is needed."*
+
+---
+
+#### How-to guides (problem-oriented)
+- **Title pattern:** Frame as a task — *"How to configure X"*, *"How to deploy Y to Z"*
+- Structure: Goal statement → Assumptions/prerequisites → Numbered steps → Expected result
+- Assume baseline knowledge; skip conceptual explanations
+- Allow for variation; note alternatives where they exist
+- **Validation:** An experienced user can complete the task without confusion or backtracking
+
+**Example intro:**
+> *"This guide shows how to add JWT authentication to an existing Express app. It assumes you have a working Express server and basic familiarity with middleware."*
+
+---
+
+#### Reference (information-oriented)
+- **Title pattern:** Name the thing — *"Configuration options"*, *"API endpoints"*, *"CLI flags"*
+- Structure: Consistent repeatable format per entry (name → type → default → description → example)
+- State facts; avoid instruction beyond minimal usage examples
+- Keep current; version-stamp if needed
+- **Validation:** A user can look up a specific fact in under 30 seconds without reading surrounding content
+
+**Example entry:**
+> **`timeout`** *(integer, default: `5000`)*
+> Maximum time in milliseconds to wait for a response before the request fails.
+> *Example:* `{ timeout: 3000 }`
+
+---
+
+#### Explanations (understanding-oriented)
+- **Title pattern:** Frame as a concept — *"How X works"*, *"Understanding Y"*, *"Why Z is designed this way"*
+- Structure: Context → Core concept → Alternatives/trade-offs → Higher-level perspective
+- Avoid step-by-step instruction or technical specification
+- **Validation:** After reading, the user can explain the concept in their own words and understands the rationale behind design decisions
+
+**Example intro:**
+> *"Authentication and authorisation are often confused. This page explains the distinction, why both matter, and how common patterns (sessions, tokens, OAuth) approach each concern differently."*
+
+---
+
+### Step 3 — Maintain separation and integration
+
+- Keep each document a single type — don't mix tutorial steps with reference tables or conceptual digressions
+- Cross-link between types: a tutorial can link to the relevant reference page; a how-to guide can link to an explanation for background
+- Use consistent headings and terminology across all types so users can navigate the full documentation system
+
+---
+
+### Step 4 — Validate before delivering
+
+| Type | Validation check |
+|---|---|
+| Tutorial | Can a beginner complete it end-to-end without external help? |
+| How-to guide | Does it solve the stated problem for an experienced user? |
+| Reference | Can the user find a specific fact in under 30 seconds? |
+| Explanation | Does the user understand the *why*, not just the *what*? |

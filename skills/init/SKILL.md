@@ -1,6 +1,6 @@
 ---
 name: init
-description: Create or refine a minimal, high-signal AGENTS.md with only non-discoverable repo guidance
+description: Creates, updates, or optimizes an AGENTS.md file for a repository with minimal, high-signal instructions covering non-discoverable coding conventions, tooling quirks, workflow preferences, and project-specific rules that agents cannot infer from reading the codebase. Use when setting up agent instructions or Claude configuration for a new repository, when an existing AGENTS.md is too long, generic, or stale, when agents repeatedly make avoidable mistakes, or when repository workflows have changed and the agent configuration needs pruning. Applies a discoverability filter—omitting anything Claude can learn from README, code, config, or directory structure—and a quality gate to verify each line remains accurate and operationally significant.
 metadata:
   tags: initialization, agents, context-engineering, agents-md, maintenance
 ---
