@@ -19,10 +19,13 @@ Current top-level skills include:
 
 - `documentation`
 - `fastify`
+- `init`
+- `linting-neostandard-eslint9`
 - `node`
 - `nodejs-core`
 - `oauth`
 - `octocat`
+- `skill-optimizer`
 - `snipgrapher`
 - `typescript-magician`
 
