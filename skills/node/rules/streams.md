@@ -7,6 +7,10 @@ metadata:
 
 # Node.js Streams
 
+## High-signal triggers
+
+If the prompt mentions **CSV**, **ETL**, **ingestion**, **large files**, **transform streams**, **backpressure**, or **line-by-line processing**, prioritize `pipeline()` + explicit async-generator transforms.
+
 ## Use pipeline for Stream Composition
 
 Always use `pipeline` instead of `.pipe()` for proper error handling:
@@ -46,6 +50,55 @@ async function processFile(input: string, output: string): Promise<void> {
     createWriteStream(output)
   );
 }
+```
+
+### CSV/ETL pattern: pipeline + async transform + deduplicated enrichment
+
+For ingestion-style tasks, show an explicit `async function*` transform and integrate deduped async lookups:
+
+```typescript
+import { pipeline } from 'node:stream/promises';
+import { createReadStream, createWriteStream } from 'node:fs';
+import { createCache } from 'async-cache-dedupe';
+
+const cache = createCache({
+  ttl: 60,
+  stale: 5,
+  storage: { type: 'memory' },
+});
+
+cache.define('lookupPlan', async (planId: string) => {
+  return await fetch(`https://billing.internal/plans/${planId}`).then(async (res) => await res.json());
+});
+
+async function* enrichCsvRows(source: AsyncIterable<Buffer>): AsyncGenerator<string> {
+  let tail = '';
+
+  for await (const chunk of source) {
+    tail += chunk.toString('utf8');
+    const lines = tail.split('\n');
+    tail = lines.pop() ?? '';
+
+    for (const line of lines) {
+      if (line.trim().length === 0) continue;
+      const [userId, planId] = line.split(',');
+      const plan = await cache.lookupPlan(planId); // concurrent requests dedupe by key
+      yield `${userId},${planId},${plan.tier}\n`;
+    }
+  }
+
+  if (tail.trim().length > 0) {
+    const [userId, planId] = tail.split(',');
+    const plan = await cache.lookupPlan(planId);
+    yield `${userId},${planId},${plan.tier}\n`;
+  }
+}
+
+await pipeline(
+  createReadStream('users.csv'),
+  enrichCsvRows,
+  createWriteStream('users-enriched.csv')
+);
 ```
 
 ### Multiple Transformations

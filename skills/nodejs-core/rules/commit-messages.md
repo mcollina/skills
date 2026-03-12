@@ -16,11 +16,10 @@ subsystem: short imperative description
 
 Longer explanation of the change if needed.
 
-Fixes: https://github.com/nodejs/node/issues/12345
-Refs: https://github.com/nodejs/node/pull/12344
+[optional footers]
 ```
 
-Examples of subsystem prefixes:
+Use canonical Node.js-style prefixes such as:
 
 - `fs:`
 - `stream:`
@@ -29,6 +28,50 @@ Examples of subsystem prefixes:
 - `test:`
 - `doc:`
 - `build:`
+
+## Footer rules (`Fixes:` vs `Refs:`)
+
+Use footer lines deliberately — they are not interchangeable.
+
+- Use `Fixes: <issue-url>` when the commit should close an issue.
+- Use `Refs: <issue-or-pr-url>` when linking related work that is **not** closed by this commit.
+- Use **both** when both semantics apply.
+- If no tracker link is relevant, omit both footers.
+
+When a task explicitly asks for a `Refs:` footer, include the `Refs:` line exactly and do not omit it.
+
+### Valid footer examples
+
+**Fixes only**
+
+```text
+fs: avoid double-close race in FileHandle
+
+Guard close path to make repeated close idempotent.
+
+Fixes: https://github.com/nodejs/node/issues/12345
+```
+
+**Refs only**
+
+```text
+stream: align docs for Readable.from backpressure
+
+Clarify behavior and edge-case notes without closing the tracking issue.
+
+Refs: https://github.com/nodejs/node/issues/23456
+```
+
+**Both Fixes and Refs**
+
+```text
+http: normalize header casing in parser fast path
+
+Apply casing normalization and add regression coverage.
+
+Fixes: https://github.com/nodejs/node/issues/34567
+Refs: https://github.com/nodejs/node/pull/34566
+```
 
 ## Validate before pushing
 
@@ -40,8 +83,11 @@ Use `core-validate-commit` to check commit message format:
 # Validate last commit message
 git log -1 --pretty=%B | npx core-validate-commit
 
-# Validate a message draft
+# Validate a Fixes-only draft
 printf "fs: fix race in readdir\n\nFixes: https://github.com/nodejs/node/issues/12345\n" | npx core-validate-commit
+
+# Validate a Refs-only draft
+printf "doc: clarify event loop phase wording\n\nRefs: https://github.com/nodejs/node/pull/12344\n" | npx core-validate-commit
 ```
 
 If validation fails, amend the commit message and re-run validation.

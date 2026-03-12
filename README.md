@@ -19,3 +19,8 @@ Skills for AI-assisted development.
 ## Usage
 
 This package contains best practices and skills for AI-assisted development.
+
+## Benchmarking
+
+- [Cross-model skill benchmarking workflow](docs/skill-benchmarking.md)
+- [Benchmark run history](docs/skill-benchmark-runs.md)

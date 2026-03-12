@@ -48,6 +48,29 @@ For multi-step processes, follow these high-level sequences before consulting th
 
 **Profiling a slow path**: Reproduce under realistic load → capture a CPU profile with `--cpu-prof` → identify hot functions → check for stream backpressure or unnecessary serialisation → validate improvement with a benchmark. See [rules/profiling.md](rules/profiling.md) and [rules/performance.md](rules/performance.md).
 
+## High-priority activation checklist (streams + caching)
+
+When the task mentions **CSV**, **ETL**, **ingestion pipelines**, **large file processing**, **backpressure**, **repeated lookups**, or **deduplicating concurrent async calls**, explicitly apply this checklist:
+
+1. Use `await pipeline(...)` from `node:stream/promises` (prefer this over chained `.pipe()` in guidance/code).
+2. Include at least one explicit `async function*` transform when data is being transformed in-stream.
+3. Choose a cache strategy when repeated work appears:
+   - `lru-cache` for bounded in-memory reuse in a single process.
+   - `async-cache-dedupe` for async request deduplication / stale-while-revalidate behavior.
+4. Show where backpressure is handled (implicitly via `pipeline()` or explicitly via `drain`).
+
+### Integrated example pattern (CSV/ETL)
+
+For CSV/ETL-style prompts, prefer an answer structure like:
+- `createReadStream(input)`
+- `async function*` parser/transform
+- optional cached enrichment lookup (`async-cache-dedupe` or `lru-cache`)
+- `await pipeline(...)` to a writable destination
+
+Link relevant rules directly in explanations so models can retrieve details:
+- [rules/streams.md](rules/streams.md)
+- [rules/caching.md](rules/caching.md)
+
 ## How to use
 
 Read individual rule files for detailed explanations and code examples:

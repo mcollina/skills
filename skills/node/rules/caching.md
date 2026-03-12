@@ -7,6 +7,16 @@ metadata:
 
 # Caching in Node.js
 
+## High-signal triggers
+
+If prompts mention **repeated async lookups**, **duplicate concurrent requests**, **CSV enrichment**, **ETL transforms**, **N+1 remote calls**, or **cache hot keys**, select a cache strategy explicitly and justify it.
+
+## Cache selection quick guide
+
+- Use **`lru-cache`** for process-local, bounded in-memory reuse where deduplicating concurrent requests is not the main concern.
+- Use **`async-cache-dedupe`** when multiple concurrent calls can request the same key and you want one in-flight request per key.
+- In stream/ETL scenarios, prefer `async-cache-dedupe` for enrichment calls inside an `async function*` transform.
+
 ## Memoization with mnemoist
 
 Use [mnemoist](https://github.com/Yomguithereal/mnemonist) for synchronous memoization:
@@ -66,6 +76,27 @@ const [user1, user2, user3] = await Promise.all([
   cache.getUser('123'),
   cache.getUser('123'),
 ]);
+```
+
+### Stream/ETL enrichment example
+
+Use deduplicated async cache inside an `async function*` transform when rows repeatedly reference the same key:
+
+```typescript
+import { createCache } from 'async-cache-dedupe';
+
+const cache = createCache({ ttl: 120, stale: 10, storage: { type: 'memory' } });
+
+cache.define('getPlan', async (planId: string) => {
+  return await db.plans.findById(planId);
+});
+
+async function* enrichRows(source: AsyncIterable<{ userId: string, planId: string }>) {
+  for await (const row of source) {
+    const plan = await cache.getPlan(row.planId); // one in-flight call per planId
+    yield { ...row, planName: plan.name };
+  }
+}
 ```
 
 ### Redis Storage
