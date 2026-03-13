@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/octocat",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Handles git and GitHub operations using the gh CLI. Use when the user asks about pull requests (PRs), GitHub issues, repo management, branching, merging, rebasing, cherry-picking, merge conflict resolution, commit history cleanup, pre-commit hook debugging, GitHub Actions workflows, or releases. Covers creating and reviewing PRs, watching CI checks, interactive rebasing, branch cleanup, submodule management, and repository archaeology with git log/blame/bisect.",
+  "skills": {
+    "octocat": {
+      "path": "SKILL.md"
+    }
+  }
+}

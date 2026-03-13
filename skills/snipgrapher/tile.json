@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/snipgrapher",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Configures and uses snipgrapher to generate polished code snippet images, including syntax-highlighted PNGs, SVGs, and WebP exports with custom themes, profiles, and styling options. Use when the user wants to create code screenshots, turn code into shareable images, generate pretty code snippets for docs or social posts, produce syntax-highlighted images from source files, or explicitly mentions snipgrapher. Supports single-file renders, batch jobs, watch mode, and reusable named profiles via the snipgrapher CLI or npx.",
+  "skills": {
+    "snipgrapher": {
+      "path": "SKILL.md"
+    }
+  }
+}
