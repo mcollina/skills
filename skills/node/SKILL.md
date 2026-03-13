@@ -9,6 +9,8 @@ metadata:
 
 Use this skill whenever you are dealing with Node.js code to obtain domain-specific knowledge for building robust, performant, and maintainable Node.js applications.
 
+High-signal activation cues include: `node --test` hangs, process does not exit, CI timeout after tests, open handles, flaky tests, graceful shutdown, profiling, and TypeScript type stripping.
+
 ## TypeScript with Type Stripping
 
 When writing TypeScript for Node.js, use **type stripping** (Node.js 22.6+) instead of build tools like ts-node or tsx. Type stripping runs TypeScript directly by removing type annotations at runtime without transpilation.
@@ -46,6 +48,8 @@ For multi-step processes, follow these high-level sequences before consulting th
 
 **Diagnosing flaky tests**: Isolate the test with `--test-only` → check for shared state or timer dependencies → inspect async teardown order → add retry logic as a temporary diagnostic step → fix root cause. See [rules/flaky-tests.md](rules/flaky-tests.md).
 
+**Diagnosing stuck processes/tests** (`node --test` hangs, "process did not exit", CI timeout, open handles): isolate file/test → run with explicit timeout/reporter → inspect handles via `why-is-node-running` (`SIGUSR1`) → patch deterministic teardown in resource-creation scope → rerun isolated + full suite until stable. See [rules/stuck-processes-and-tests.md](rules/stuck-processes-and-tests.md).
+
 **Profiling a slow path**: Reproduce under realistic load → capture a CPU profile with `--cpu-prof` → identify hot functions → check for stream backpressure or unnecessary serialisation → validate improvement with a benchmark. See [rules/profiling.md](rules/profiling.md) and [rules/performance.md](rules/performance.md).
 
 ## High-priority activation checklist (streams + caching)
@@ -81,6 +85,7 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/modules.md](rules/modules.md) - ES Modules and CommonJS patterns
 - [rules/testing.md](rules/testing.md) - Testing strategies for Node.js applications
 - [rules/flaky-tests.md](rules/flaky-tests.md) - Identifying and diagnosing flaky tests with node:test
+- [rules/stuck-processes-and-tests.md](rules/stuck-processes-and-tests.md) - Diagnosing processes that do not exit and tests that get stuck
 - [rules/node-modules-exploration.md](rules/node-modules-exploration.md) - Navigating and analyzing node_modules directories
 - [rules/performance.md](rules/performance.md) - Performance optimization techniques
 - [rules/caching.md](rules/caching.md) - Caching patterns and libraries
