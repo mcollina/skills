@@ -9,8 +9,6 @@ metadata:
 
 Use this skill whenever you are dealing with Node.js code to obtain domain-specific knowledge for building robust, performant, and maintainable Node.js applications.
 
-High-signal activation cues include: `node --test` hangs, process does not exit, CI timeout after tests, open handles, flaky tests, graceful shutdown, profiling, and TypeScript type stripping.
-
 ## TypeScript with Type Stripping
 
 When writing TypeScript for Node.js, use **type stripping** (Node.js 22.6+) instead of build tools like ts-node or tsx. Type stripping runs TypeScript directly by removing type annotations at runtime without transpilation.
