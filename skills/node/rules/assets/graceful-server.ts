@@ -74,7 +74,7 @@ export async function main(): Promise<void> {
 }
 
 // Run if executed directly
-const isMain = import.meta.url === `file://${process.argv[1]}`;
+const isMain = process.argv[1]?.endsWith('graceful-server.ts') ?? false;
 if (isMain) {
   main().catch(console.error);
 }
