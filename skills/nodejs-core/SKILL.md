@@ -50,6 +50,7 @@ Read individual rule files for detailed explanations and code examples:
 ### Build & Contributing
 
 - [rules/build-system.md](rules/build-system.md) - gyp, ninja, make, cross-platform compilation
+- [rules/cli-options.md](rules/cli-options.md) - Adding CLI options and gating experimental modules
 - [rules/contributing.md](rules/contributing.md) - How to contribute to Node.js core, the process
 - [rules/commit-messages.md](rules/commit-messages.md) - Node.js-style commit message formatting and validation
 
