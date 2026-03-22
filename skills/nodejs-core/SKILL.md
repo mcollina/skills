@@ -59,6 +59,7 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/cli-options.md](rules/cli-options.md) - Adding CLI options and gating experimental modules
 - [rules/contributing.md](rules/contributing.md) - How to contribute to Node.js core, the process
 - [rules/commit-messages.md](rules/commit-messages.md) - Node.js-style commit message formatting and validation
+- [rules/reviewing-prs.md](rules/reviewing-prs.md) - Reviewing PRs, quality signals, and spotting low-quality AI-generated contributions
 
 ### Debugging & Profiling
 
