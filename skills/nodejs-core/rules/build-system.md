@@ -33,6 +33,9 @@ GYP (generate-your-project)  ←── Creates platform-specific build files
 
 ## Building Node.js from Source
 
+For the day-to-day edit-build-lint-test workflow, see
+[build-and-test-workflow.md](build-and-test-workflow.md).
+
 ### Prerequisites
 
 ```bash
@@ -50,58 +53,6 @@ xcode-select --install
 # Windows
 # Install Visual Studio 2022 with C++ workload
 # Install Python 3
-```
-
-### Basic Build
-
-```bash
-# Clone repository
-git clone https://github.com/nodejs/node.git
-cd node
-
-# Configure
-./configure
-
-# Build (uses all cores)
-make -j$(nproc)
-
-# Or with ninja (faster)
-./configure --ninja
-ninja -C out/Release
-
-# Test
-./node -v
-make test
-```
-
-### Build Options
-
-```bash
-# Debug build
-./configure --debug
-make -j$(nproc)
-
-# Release build (default)
-./configure
-make -j$(nproc)
-
-# With shared library
-./configure --shared
-
-# Custom install prefix
-./configure --prefix=/opt/node
-
-# Without npm
-./configure --without-npm
-
-# Without ICU (smaller binary)
-./configure --without-intl
-
-# With OpenSSL from system
-./configure --shared-openssl
-
-# Cross-compile for different architecture
-./configure --dest-cpu=arm64 --dest-os=linux
 ```
 
 ## GYP (Generate Your Project)
@@ -308,15 +259,15 @@ npm rebuild
 ### Verbose Build
 
 ```bash
-# Make with verbose output
-make V=1
-
 # node-gyp verbose
 node-gyp rebuild --verbose
 
 # Very verbose
 node-gyp rebuild --loglevel=silly
 ```
+
+For Node.js core build verbosity (`make V=1`), see
+[build-and-test-workflow.md](build-and-test-workflow.md#build).
 
 ### Common Build Errors
 
@@ -370,52 +321,19 @@ npm rebuild
 }
 ```
 
-## Ninja Build
-
-Ninja is faster than Make for incremental builds:
+## Static Analysis for Addons
 
 ```bash
-# Configure with Ninja
-./configure --ninja
-
-# Build
-ninja -C out/Release
-
-# Build specific target
-ninja -C out/Release node
-
-# Verbose
-ninja -C out/Release -v
-
-# Clean
-ninja -C out/Release -t clean
-```
-
-## Static Analysis
-
-### Linting
-
-```bash
-# Node.js core linting
-make lint
-make lint-cpp
-make lint-js
-
 # For addons, use clang-tidy
 clang-tidy src/*.cc -- -I$(node -p "require('node-addon-api').include")
-```
 
-### Address Sanitizer
-
-```bash
-# Build Node.js with ASan
-./configure --debug --enable-asan
-make -j$(nproc)
-
-# Or for addons
+# Build addon with ASan
 node-gyp rebuild --debug
 ASAN_OPTIONS=detect_leaks=1 node test.js
 ```
+
+For Node.js core linting and formatting, see
+[build-and-test-workflow.md](build-and-test-workflow.md#lint).
 
 ## Prebuild Binaries
 

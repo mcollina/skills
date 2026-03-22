@@ -20,14 +20,10 @@ cd node
 
 # Add upstream remote
 git remote add upstream https://github.com/nodejs/node.git
-
-# Build
-./configure && make -j$(nproc)
-
-# Verify
-./node -v
-make test
 ```
+
+For building, linting, and testing, see
+[build-and-test-workflow.md](build-and-test-workflow.md).
 
 ### Understanding the Repository Structure
 
@@ -131,16 +127,8 @@ build: fix gyp warnings on Windows
 
 ### Code Style
 
-```bash
-# Run linters
-make lint
-make lint-cpp
-make lint-js
-make lint-md
-
-# Auto-fix some issues
-make lint-js-fix
-```
+For lint and formatting commands, see
+[build-and-test-workflow.md](build-and-test-workflow.md#lint).
 
 ### Writing Tests
 
@@ -171,19 +159,10 @@ const fs = require('fs');
 
 ### Running Tests
 
+For build, test, and workflow commands, see
+[build-and-test-workflow.md](build-and-test-workflow.md#test).
+
 ```bash
-# Run all tests
-make test
-
-# Run specific test
-./node test/parallel/test-fs-read.js
-
-# Run tests matching pattern
-python tools/test.py parallel/test-fs-*
-
-# Run with specific options
-./node --test-isolation=none test/parallel/test-fs-read.js
-
 # Run benchmarks
 node benchmark/fs/readfile.js
 ```
