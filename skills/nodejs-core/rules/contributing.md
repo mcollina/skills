@@ -346,7 +346,7 @@ const { a, b } = obj;
 // Template literals
 const message = `Value is ${value}`;
 
-// Use primordials for built-ins in internal code
+// Use primordials for built-ins in internal code (see primordials.md)
 const {
   ArrayPrototypeMap,
   ObjectDefineProperty,

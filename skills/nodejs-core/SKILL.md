@@ -47,6 +47,10 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/child-process-internals.md](rules/child-process-internals.md) - IPC, spawn, fork implementation
 - [rules/worker-threads-internals.md](rules/worker-threads-internals.md) - SharedArrayBuffer, Atomics, MessageChannel
 
+### JavaScript Internals
+
+- [rules/primordials.md](rules/primordials.md) - **Using primordials to prevent prototype pollution (required for `lib/internal/`)**
+
 ### Build & Contributing
 
 - [rules/build-and-test-workflow.md](rules/build-and-test-workflow.md) - **The edit-build-lint-test cycle (start here)**
