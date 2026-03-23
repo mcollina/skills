@@ -61,6 +61,10 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/commit-messages.md](rules/commit-messages.md) - Node.js-style commit message formatting and validation
 - [rules/reviewing-prs.md](rules/reviewing-prs.md) - Reviewing PRs, quality signals, and spotting low-quality AI-generated contributions
 
+### Documentation
+
+- [rules/documentation.md](rules/documentation.md) - **Updating doc/api/*.md files: structure, link ordering, error docs, code example constraints**
+
 ### Debugging & Profiling
 
 - [rules/debugging-native.md](rules/debugging-native.md) - gdb, lldb, debugging C++ addons
