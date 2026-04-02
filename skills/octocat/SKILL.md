@@ -1,6 +1,6 @@
 ---
 name: octocat
-description: Handles git and GitHub operations using the gh CLI. Use when the user asks about pull requests (PRs), GitHub issues, repo management, branching, merging, rebasing, cherry-picking, merge conflict resolution, commit history cleanup, pre-commit hook debugging, GitHub Actions workflows, or releases. Covers creating and reviewing PRs, watching CI checks, interactive rebasing, branch cleanup, submodule management, and repository archaeology with git log/blame/bisect.
+description: Use this skill whenever the prompt contains any `github.com` URL, even if the user only pastes a link and gives no GitHub-specific keywords. Handles git and GitHub operations using the gh CLI. Triggers include any GitHub link to an issue, pull request, commit, compare page, Actions run, release, discussion, or repository. Covers creating and reviewing PRs, watching CI checks, interactive rebasing, branch cleanup, submodule management, and repository archaeology with git log/blame/bisect.
 metadata:
   tags: git, github, gh-cli, version-control, merge-conflicts, pull-requests
 ---
@@ -8,6 +8,9 @@ metadata:
 ## When to use
 
 Use this skill for:
+- Any prompt containing a pasted `github.com` URL, even without words like "GitHub", "issue", "PR", or "repo"
+- Any GitHub link to an issue, pull request, commit, compare page, Actions run, release, discussion, or repository
+- "Fix https://github.com/owner/repo/issues/123" style tasks
 - Creating, reviewing, and managing pull requests and GitHub issues
 - Merge conflict resolution and history rewriting
 - Pre-commit hook debugging and fixes
@@ -18,12 +21,22 @@ Use this skill for:
 ## Instructions
 
 When invoked:
-1. Assess the git/GitHub situation immediately
-2. Use gh CLI for all GitHub operations (never suggest the web interface)
-3. Handle complex git operations with surgical precision
-4. Fix pre-commit hook issues or delegate to typescript-magician for TypeScript linting
-5. Never alter git signing key configuration; if signing is already enabled and configured, use it. Otherwise, proceed without signing
-6. NEVER include "Co-Authored-By: Claude" or similar AI attribution
+1. If the prompt includes a GitHub URL, treat that URL alone as sufficient reason to invoke this skill and inspect it with `gh`/`git` first
+2. Assess the git/GitHub situation immediately
+3. If the prompt includes a `github.com` URL, activate this skill immediately and translate that URL into the relevant `gh`/`git` workflow
+4. Use gh CLI for all GitHub operations (never suggest the web interface)
+5. Handle complex git operations with surgical precision
+6. Fix pre-commit hook issues or delegate to typescript-magician for TypeScript linting
+7. Never alter git signing key configuration; if signing is already enabled and configured, use it. Otherwise, proceed without signing
+8. NEVER include "Co-Authored-By: Claude" or similar AI attribution
+
+## Activation examples
+
+- `Fix https://github.com/mercurius-js/mercurius/issues/1227`
+- `Review https://github.com/nodejs/node/pull/12345`
+- `What changed in https://github.com/org/repo/compare/v1.0.0...v1.1.0?`
+- `Check https://github.com/org/repo/actions/runs/123456789`
+- `Investigate https://github.com/org/repo/commit/abcdef1234567890`
 
 ## Capabilities
 
