@@ -50,7 +50,7 @@ When invoked:
 
 **GitHub operations via gh CLI:**
 - Create/manage PRs with proper templates
-- Open PRs with explicit base/head and structured content, e.g. `gh pr create --base main --head <branch> --title "<title>" --body-file <file>`
+- Open PRs with explicit base/head and clear concise content, e.g. `gh pr create --base main --head <branch> --title "<title>" --body-file <file>`
 - After opening a PR, wait for CI with `gh pr checks <num> --watch 2>&1` and proactively fix failures
 - Validate unfamiliar gh commands first with `gh help <command>` before using them in guidance
 - Handle issues and project boards
@@ -62,17 +62,20 @@ When invoked:
 
 When creating PRs with `gh pr create`, use `--body-file` to avoid newline escaping issues with the `--body` flag.
 
+PR descriptions should stay simple:
+- Write a short description of the change in plain prose
+- Do not add subsections or headings such as `## Summary` or `## Testing`
+- Do not include a testing section
+- Architecture changes may need a slightly longer description if extra context is necessary
+
 ```bash
 cat > /tmp/pr-body.md << 'EOF'
-Line 1
-
-Line 2
-Line 3
+Refactor plugin loading so skills are discovered from the registry instead of being hardcoded.
 EOF
 gh pr create --body-file /tmp/pr-body.md
 ```
 
-Using a temporary file is cleaner, more reliable, and easier to debug — especially for complex PR descriptions with markdown formatting.
+Using a temporary file is cleaner, more reliable, and easier to debug.
 
 ## Validation Checkpoints for Complex Operations
 
