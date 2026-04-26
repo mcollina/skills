@@ -1,11 +1,13 @@
 ---
-name: error-handling
-description: Error handling patterns in Node.js
+name: node-error-handling
+description: Node.js error handling patterns including custom error classes with @fastify/create-error, error codes and status codes, async try-catch boundaries, unhandled rejection guards, Fastify error handlers, error cause chains, and operational vs programmer error classification. Use when implementing robust error handling in Node.js APIs, creating typed application errors, propagating errors through async stacks, or configuring framework-level error middleware.
 metadata:
-  tags: errors, exceptions, try-catch, error-handling
+  tags: node, nodejs, errors, exceptions, try-catch, error-handling, fastify, create-error, status-codes, unhandled-rejection
 ---
 
 # Error Handling in Node.js
+
+Define a shared error base class → classify errors (operational vs programmer) → add async boundary handlers (`process.on('unhandledRejection')`) → propagate typed errors through the call stack → log with context before responding or crashing.
 
 ## Custom Errors with @fastify/create-error
 
@@ -104,7 +106,7 @@ async function fetchUser(id: string): Promise<User> {
 
 Do not handle `unhandledRejection` and `uncaughtException` manually. Use [close-with-grace](https://github.com/fastify/close-with-grace) which handles these automatically and triggers graceful shutdown.
 
-See [graceful-shutdown.md](./graceful-shutdown.md) for proper shutdown handling.
+See the `node-graceful-shutdown` skill for proper shutdown handling.
 
 ## Fastify Error Handling
 
