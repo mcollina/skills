@@ -1,8 +1,8 @@
 ---
-name: performance
-description: Performance optimization techniques
+name: node-performance
+description: Node.js performance optimization techniques including event loop blocking prevention, CPU-intensive task offloading with worker threads and Piscina, connection pooling for databases, memory leak avoidance with LRU caches and listener cleanup, and lazy loading of modules. Use when optimizing Node.js application performance, preventing event loop starvation, managing memory usage, or implementing concurrent processing patterns.
 metadata:
-  tags: performance, optimization, memory, worker-threads
+  tags: node, nodejs, performance, optimization, worker-threads, piscina, event-loop, memory-leaks, connection-pooling, lazy-loading
 ---
 
 # Performance in Node.js
@@ -124,7 +124,7 @@ async function getHeavyModule(): Promise<HeavyModule> {
 }
 ```
 
-## Related
+## Related Skills
 
-- [caching.md](./caching.md) - Caching patterns and libraries
-- [profiling.md](./profiling.md) - Profiling and benchmarking tools
+- `node-caching` - Caching patterns and libraries
+- `node-profiling` - Profiling and benchmarking tools
