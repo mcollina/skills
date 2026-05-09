@@ -55,6 +55,32 @@ build configuration rather than assuming one. Key questions:
 Most of the time, `./configure` has already been run and you only need
 `make -j$(nproc)` to rebuild.
 
+### Ninja vs Make
+
+Some users prefer ninja for faster incremental builds.
+
+Running `./configure --ninja` generates the ninja build files. You still use
+`make` for all build targets, but it invokes ninja internally for the compilation
+step.
+
+Check the user's build setup before assuming Make or Ninja. If there is a
+`build.ninja` file in the `out/Release` or `out/Debug` directory, they are using
+ninja.
+
+### Adding new JavaScript or C++ files
+
+Whenever you add new JavaScript files in `lib` or new C++ files in `src`, you
+must run `./configure` to update the build configuration. If you are unsure
+whether a configure is needed, ask the user.
+
+### Experimental build flags
+
+Some work in Node.js core is experimental and requires special configure flags to
+enable. For example, to work on the experimental QUIC implementation, you must
+run `./configure` with the `--experimental-quic` flag. If you are working on an
+experimental feature, ask the user what configure flags are needed or review the
+relevant documentation.
+
 ## Build
 
 ```bash
@@ -102,13 +128,13 @@ This runs all linters: JavaScript (ESLint), C++ (cpplint), Markdown
 
 | Target              | What it checks                                    |
 | ------------------- | ------------------------------------------------- |
-| `make lint`         | All linters                                        |
-| `make lint-js`      | JavaScript with ESLint                             |
-| `make lint-js-fix`  | JavaScript with ESLint `--fix` (auto-corrects)     |
-| `make lint-cpp`     | C++ with cpplint and checkimports                  |
-| `make lint-md`      | Markdown with remark                               |
-| `make lint-py`      | Python with ruff                                   |
-| `make lint-yaml`    | YAML with yamllint                                 |
+| `make lint`         | All linters                                       |
+| `make lint-js`      | JavaScript with ESLint                            |
+| `make lint-js-fix`  | JavaScript with ESLint `--fix` (auto-corrects)    |
+| `make lint-cpp`     | C++ with cpplint and checkimports                 |
+| `make lint-md`      | Markdown with remark                              |
+| `make lint-py`      | Python with ruff                                  |
+| `make lint-yaml`    | YAML with yamllint                                |
 
 ### Formatting C++ Code
 
@@ -210,14 +236,14 @@ python3 tools/test.py parallel sequential message
 
 | Option                 | Default     | Purpose                                           |
 | ---------------------- | ----------- | ------------------------------------------------- |
-| `-j N`                 | (all CPUs)  | Number of parallel test processes                  |
-| `-m, --mode MODE`      | `release`   | `release`, `debug`, or `debug,release`             |
-| `-t, --timeout SECS`   | `120`       | Timeout per test                                   |
-| `--shell PATH`         | auto-detect | Path to node binary                                |
-| `--node-args ARGS`     | (none)      | Extra args passed to node                          |
-| `--flaky-tests ACTION` | `run`       | `run`, `skip`, `dontcare`, `keep_retrying`         |
-| `-v, --verbose`        | off         | Verbose output                                     |
-| `--repeat N`           | `1`         | Repeat tests N times                               |
+| `-j N`                 | (all CPUs)  | Number of parallel test processes                 |
+| `-m, --mode MODE`      | `release`   | `release`, `debug`, or `debug,release`            |
+| `-t, --timeout SECS`   | `120`       | Timeout per test                                  |
+| `--shell PATH`         | auto-detect | Path to node binary                               |
+| `--node-args ARGS`     | (none)      | Extra args passed to node                         |
+| `--flaky-tests ACTION` | `run`       | `run`, `skip`, `dontcare`, `keep_retrying`        |
+| `-v, --verbose`        | off         | Verbose output                                    |
+| `--repeat N`           | `1`         | Repeat tests N times                              |
 
 ### Specialized Test Targets
 
