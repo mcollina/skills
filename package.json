@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"description": "Best practices and skills for Node.js development",
 	"repository": {
-		"url": "https://github.com/your-org/node-skills"
+		"url": "https://github.com/mcollina/skills.git"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",

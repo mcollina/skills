@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/xquik-node-data",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Build typed Node.js integrations for Xquik tweet search, REST, webhooks, and MCP workflows.",
+  "skills": {
+    "xquik-node-data": {
+      "path": "SKILL.md"
+    }
+  }
+}
