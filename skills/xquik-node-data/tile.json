@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/xquik-node-data",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Build Node.js integrations for Xquik REST API, OpenAPI, webhooks, and MCP workflows.",
+  "skills": {
+    "xquik-node-data": {
+      "path": "SKILL.md"
+    }
+  }
+}

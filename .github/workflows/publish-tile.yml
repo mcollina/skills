@@ -26,6 +26,7 @@ jobs:
           - skills/skill-optimizer
           - skills/snipgrapher
           - skills/typescript-magician
+          - skills/xquik-node-data
     steps:
       - uses: actions/checkout@v4
       - uses: tesslio/publish@main
