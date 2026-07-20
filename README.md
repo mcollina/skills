@@ -17,6 +17,7 @@ Skills for AI-assisted development.
 | `skill-optimizer` | Improves skill activation, benchmark outcomes, and regression resistance across models |
 | `snipgrapher` | Configure and use snipgrapher to generate polished code snippet images |
 | `typescript-magician` | TypeScript wizard specializing in advanced type systems, complex generics, and eliminating any types |
+| `xquik-node-data` | Build Node.js integrations for Xquik REST API, OpenAPI, webhooks, and MCP workflows |
 
 ## Usage
 

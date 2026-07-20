@@ -28,6 +28,7 @@ Current top-level skills include:
 - `skill-optimizer`
 - `snipgrapher`
 - `typescript-magician`
+- `xquik-node-data`
 
 ### 2) Minimal TypeScript package surface (`src/`)
 
