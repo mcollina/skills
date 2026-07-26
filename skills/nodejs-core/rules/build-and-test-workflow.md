@@ -86,8 +86,17 @@ make -j$(nproc)
 
 ## Lint
 
-Run linting **after** your changes build successfully but **before** pushing
-or running the full test suite. This catches style issues early.
+Run linting **after** your changes build successfully and **before every
+commit**. Node.js runs a `Linters` CI workflow on every non-draft pull
+request; linting locally first is what makes that workflow pass on the first
+attempt instead of costing a force-push and another CI cycle.
+
+Note that on Unix `make test` runs **no** linters — a green test run says
+nothing about CI's lint jobs.
+
+See [pre-commit-lint.md](pre-commit-lint.md) for the full pre-commit gate,
+including the CI-job-to-command mapping and the checks `make lint` does not
+cover.
 
 ### Full Lint
 
@@ -95,8 +104,10 @@ or running the full test suite. This catches style issues early.
 make lint
 ```
 
-This runs all linters: JavaScript (ESLint), C++ (cpplint), Markdown
-(remark), and YAML (yamllint).
+This runs JavaScript (ESLint), C++ (cpplint), addon docs, Markdown (remark),
+and YAML (yamllint). It does **not** run the Python linter, the shell
+linter, or the C++ formatter, all of which have their own CI jobs — see
+[pre-commit-lint.md](pre-commit-lint.md).
 
 ### Targeted Lint Commands
 
@@ -106,9 +117,11 @@ This runs all linters: JavaScript (ESLint), C++ (cpplint), Markdown
 | `make lint-js`      | JavaScript with ESLint                             |
 | `make lint-js-fix`  | JavaScript with ESLint `--fix` (auto-corrects)     |
 | `make lint-cpp`     | C++ with cpplint and checkimports                  |
+| `make lint-addon-docs` | C++ samples in the addon documentation          |
 | `make lint-md`      | Markdown with remark                               |
-| `make lint-py`      | Python with ruff                                   |
-| `make lint-yaml`    | YAML with yamllint                                 |
+| `make lint-py`      | Python with ruff (needs `make lint-py-build`)      |
+| `make lint-yaml`    | YAML with yamllint (needs `make lint-yaml-build`)  |
+| `tools/lint-sh.mjs .` | Shell scripts with shellcheck                    |
 
 ### Formatting C++ Code
 
@@ -121,16 +134,23 @@ make format-cpp-build
 # Format staged changes (default):
 make format-cpp
 
-# Format all changes on current branch vs main:
-CLANG_FORMAT_START=main make format-cpp
-
 # Format changes in the last commit:
 CLANG_FORMAT_START=HEAD~1 make format-cpp
+
+# What CI actually checks — every change on the branch:
+CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
+git --no-pager diff --exit-code   # must be empty
 ```
 
 `make format-cpp` uses `git-clang-format` with the repo's `.clang-format`
 config. It only formats the diff, not the entire codebase. Run it before
 committing C++ changes.
+
+The default (`CLANG_FORMAT_START=HEAD`) covers staged changes only, while
+CI's `format-cpp` job formats from the merge base with the target branch and
+fails if any diff remains. Use the merge-base form above before pushing, or
+an unformatted earlier commit in the branch will fail CI despite a clean
+local run.
 
 ### Formatting Markdown
 
@@ -258,13 +278,17 @@ $EDITOR lib/internal/streams/transform.js
 # 2. Rebuild (MANDATORY — JS is embedded in the binary)
 make -j$(nproc)
 
-# 3. Lint JavaScript
+# 3. Lint JavaScript (before committing, not after)
 make lint-js
 
 # 4. Run the relevant test(s)
 ./node test/parallel/test-stream-transform.js
 
-# 5. Before pushing, run broader tests
+# 5. Commit only once lint is clean, then validate the message
+git add -A && git commit -s
+npx core-validate-commit --no-validate-metadata HEAD
+
+# 6. Before pushing, run broader tests
 make test-only
 ```
 
@@ -289,7 +313,15 @@ make lint-cpp
 # 6. Run C++ tests if you touched testable C++
 make cctest
 
-# 7. Before pushing, run broader tests
+# 7. Commit only once format and lint are clean, then validate the message
+git add -A && git commit -s
+npx core-validate-commit --no-validate-metadata HEAD
+
+# 8. Before pushing, confirm the whole branch is formatted the way CI checks
+CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
+git --no-pager diff --exit-code
+
+# 9. Run broader tests
 make test-only
 ```
 
@@ -311,7 +343,11 @@ make lint
 # 4. Run targeted tests
 ./node test/parallel/test-your-feature.js
 
-# 5. Full test run
+# 5. Commit only once format and lint are clean, then validate the message
+git add -A && git commit -s
+npx core-validate-commit --no-validate-metadata HEAD
+
+# 6. Full test run
 make test
 ```
 
@@ -330,6 +366,25 @@ make -j$(nproc)                                   # ← REBUILD FIRST
 ./node test/parallel/test-stream-transform.js
 ```
 
+### Committing without linting
+
+```bash
+# WRONG — the Linters CI job fails, costing a force-push and a new CI cycle:
+$EDITOR lib/internal/streams/transform.js
+make -j$(nproc)
+git commit -s -am "stream: ..."
+
+# CORRECT:
+$EDITOR lib/internal/streams/transform.js
+make -j$(nproc)
+make lint                                         # ← gate the commit
+git commit -s -am "stream: ..."
+npx core-validate-commit --no-validate-metadata HEAD
+```
+
+`make test` does not run linters on Unix, so a green test run is not a
+substitute. See [pre-commit-lint.md](pre-commit-lint.md).
+
 ### Forgetting to format C++ before committing
 
 ```bash
@@ -337,6 +392,10 @@ make -j$(nproc)                                   # ← REBUILD FIRST
 # Always run after C++ changes:
 make format-cpp-build   # first time only
 make format-cpp
+
+# And before pushing, check the whole branch the way CI does:
+CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
+git --no-pager diff --exit-code
 ```
 
 ### Running `make test` without `make` first

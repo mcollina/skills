@@ -55,6 +55,7 @@ Read individual rule files for detailed explanations and code examples:
 ### Build & Contributing
 
 - [rules/build-and-test-workflow.md](rules/build-and-test-workflow.md) - **The edit-build-lint-test cycle (start here)**
+- [rules/pre-commit-lint.md](rules/pre-commit-lint.md) - **Mandatory lint, format, and `core-validate-commit` gate for every commit so CI passes first time**
 - [rules/configure.md](rules/configure.md) - `./configure` flags for debug builds, ASan, Ninja, etc.
 - [rules/build-system.md](rules/build-system.md) - gyp, ninja, make, cross-platform compilation
 - [rules/cli-options.md](rules/cli-options.md) - Adding CLI options and gating experimental modules
@@ -83,7 +84,10 @@ When drafting a `nodejs/node` commit or pull request, read
 Use terse subsystem-prefixed titles and plain, matter-of-fact prose. Lead with
 concrete behavior, explain the reason for the change, and omit hype, canned
 headings, file-by-file narration, and unsupported claims. Include the
-contributor's DCO sign-off.
+contributor's DCO sign-off, and never add `PR-URL:` or `Reviewed-By:` — those
+are added when the change lands. Validate the result with
+`npx core-validate-commit --no-validate-metadata <sha>` in the `nodejs/node`
+checkout.
 
 ### MANDATORY: Rebuild before testing
 
@@ -103,6 +107,29 @@ Before starting work, **ask the user** about their build configuration
 (Make vs Ninja, debug vs release, what configure flags they use). Do not
 assume a specific setup. Most of the time, `./configure` has already been
 run and only `make -j$(nproc)` is needed to rebuild.
+
+### MANDATORY: Lint before every commit
+
+Node.js runs a `Linters` CI workflow on every non-draft pull request, and on
+Unix `make test` runs **no** linters. Run `make lint` before each `git
+commit` — plus `make format-cpp` for C++ changes — so the lint jobs pass on
+the first CI run instead of costing a force-push and another full cycle.
+
+```
+build  →  make lint  →  (C++: make format-cpp)  →  git commit -s
+      →  npx core-validate-commit --no-validate-metadata HEAD
+```
+
+`make lint` does not cover every CI lint job: Python (`make lint-py`), shell
+(`tools/lint-sh.mjs .`), C++ formatting, and commit-message validation are
+separate jobs. See [rules/pre-commit-lint.md](rules/pre-commit-lint.md) for
+the full gate, the CI-job-to-command mapping, and the merge-base form of
+`format-cpp` that matches what CI checks.
+
+Validate every commit message with `core-validate-commit`, always with
+`--no-validate-metadata` — metadata validation is on by default and enforces
+trailers that only exist after landing. **Never add `PR-URL:` or
+`Reviewed-By:` to a commit you author**; the landing process adds them.
 
 See [rules/build-and-test-workflow.md](rules/build-and-test-workflow.md)
 for the full workflow including configure flags, lint targets, and test

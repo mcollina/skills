@@ -123,8 +123,12 @@ match the commit author metadata.
 - Credit actual co-authors with correctly formatted trailers.
 - Put `Fixes:` and `Refs:` lines, with full URLs, in the pull request
   description. The landing process adds them to the resulting commit.
-- Do not invent `PR-URL:` or `Reviewed-By:` trailers. The landing process adds
-  those from the pull request and its approvals.
+- **Never add a `PR-URL:` trailer to a commit you author.** `PR-URL:` and
+  `Reviewed-By:` are added at landing time by the commit queue or
+  `git node land`, from the pull request and its approvals. You cannot know
+  the PR number before opening the PR, and a hand-written or guessed value
+  ends up wrong in the permanent history. This holds even when
+  `core-validate-commit` reports a missing `PR-URL` — see below.
 
 A landed commit commonly ends like this:
 
@@ -138,21 +142,51 @@ Reviewed-By: Reviewer Name <reviewer@example.com>
 See [pull-request-descriptions.md](pull-request-descriptions.md) for `Fixes:`
 and `Refs:` semantics in the authored PR body.
 
-## Validate in a `nodejs/node` checkout
+## Validate every commit in a `nodejs/node` checkout
+
+**Validate each commit message with `core-validate-commit` before pushing.**
+It is the same tool the project runs in CI, so a local run is what makes the
+commit-lint job pass on the first attempt.
 
 Do not run `core-validate-commit` against unrelated repositories, including the
-skills repository containing this document. In a `nodejs/node` checkout:
+skills repository containing this document — its subsystem rule is specific to
+`nodejs/node`. In a `nodejs/node` checkout:
 
 ```bash
 # Inspect the complete message.
 git log -1 --format=%B
 
-# Validate an authored commit before landing metadata exists.
+# Validate the commit you just authored.
 npx core-validate-commit --no-validate-metadata HEAD
 
-# Validate a landed commit, including PR-URL and reviewer metadata.
-npx core-validate-commit HEAD
+# Validate every commit on the branch.
+git rev-list upstream/main..HEAD | xargs npx core-validate-commit --no-validate-metadata
 ```
+
+**Always use `--no-validate-metadata` on authored commits.** Metadata
+validation is on by default (`-V, --validate-metadata`) and enforces the
+`PR-URL:` and `Reviewed-By:` trailers that exist only after landing. Without
+the flag, a perfectly good local commit fails the `pr-url` and `reviewers`
+rules. That output is expected — **do not "fix" it by adding a `PR-URL:`
+trailer.** Node.js CI uses the same flag:
+
+```bash
+# From .github/workflows/commit-lint.yml
+npx -q core-validate-commit --no-validate-metadata --tap <sha>
+```
+
+Note that CI validates only the first commit of a pull request; the branch-wide
+command above covers the rest.
+
+Validate *with* metadata only when inspecting a commit that has already landed
+on `main`:
+
+```bash
+npx core-validate-commit HEAD   # landed commits only
+```
+
+Fix any failure with `git commit --amend` (or an interactive rebase for older
+commits) while the branch is still local.
 
 If the human sign-off is missing, amend with the contributor's configured
 identity:
