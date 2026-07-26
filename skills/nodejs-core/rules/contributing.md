@@ -96,8 +96,8 @@ git checkout -b fix-issue-12345
 
 ### Commit Message Format
 
-Use [commit-messages.md](commit-messages.md) for the evidence-based Node.js
-house style and current DCO requirements. The default authored form is:
+Use [commit-and-pr-guideline.md](commit-and-pr-guideline.md) for the Node.js house style
+and current DCO requirements. The default authored form is:
 
 ```text
 subsystem[,subsystem...]: imperative description
@@ -109,11 +109,29 @@ Signed-off-by: Human Contributor <human@example.com>
 
 Create the sign-off with `git commit -s`; never fabricate another person's
 identity. Put full-URL `Fixes:` and `Refs:` lines in the pull request body so
-the landing process can add them to the landed commit.
+the landing process can add them to the landed commit. Never write a `PR-URL:`
+or `Reviewed-By:` trailer yourself — landing adds those.
+
+Validate each commit before pushing, using the same invocation as CI:
+
+```bash
+npx core-validate-commit --no-validate-metadata HEAD
+
+# Or the whole branch:
+git rev-list upstream/main..HEAD | xargs npx core-validate-commit --no-validate-metadata
+```
+
+`--no-validate-metadata` is required for unlanded commits: metadata validation
+is on by default and fails on the missing `PR-URL:` and `Reviewed-By:`
+trailers, which is expected and must not be "fixed" by adding them.
 
 ### Code Style
 
-For lint and formatting commands, see
+Run `make lint` before every commit — the `Linters` CI workflow runs on every
+non-draft pull request, and `make test` does not lint on Unix. For the full
+pre-commit gate, including the C++ formatter and the CI jobs `make lint` does
+not cover, see [pre-commit-lint.md](pre-commit-lint.md). For the rest of the
+lint and formatting commands, see
 [build-and-test-workflow.md](build-and-test-workflow.md#lint).
 
 ### Writing Tests
@@ -158,7 +176,7 @@ node benchmark/fs/readfile.js
 ### Creating a PR
 
 Use the terse style in
-[pull-request-descriptions.md](pull-request-descriptions.md). Write the body to
+[commit-and-pr-guideline.md](commit-and-pr-guideline.md). Write the body to
 a file so Markdown is preserved:
 
 ```bash
@@ -186,7 +204,10 @@ gh pr create \
 2. **Documentation**: Update documentation for public behavior and APIs.
 3. **Commits**: Keep logical changes self-contained and signed off.
 4. **CI**: Required CI must pass; inspect failures rather than assuming they
-   are unrelated.
+   are unrelated. Lint locally before committing
+   ([pre-commit-lint.md](pre-commit-lint.md)) — lint failures are the
+   cheapest CI failures to avoid and the most annoying to leave for a
+   reviewer to point out.
 5. **Review**: Two collaborator approvals are normally required; one is enough
    after the PR has been open for more than seven days.
 6. **Wait time**: Leave non-trivial changes open for at least 48 hours.
