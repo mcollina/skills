@@ -60,8 +60,7 @@ Read individual rule files for detailed explanations and code examples:
 - [rules/build-system.md](rules/build-system.md) - gyp, ninja, make, cross-platform compilation
 - [rules/cli-options.md](rules/cli-options.md) - Adding CLI options and gating experimental modules
 - [rules/contributing.md](rules/contributing.md) - How to contribute to Node.js core, the process
-- [rules/commit-messages.md](rules/commit-messages.md) - Node.js commit style derived from 2024-2025 history and current requirements
-- [rules/pull-request-descriptions.md](rules/pull-request-descriptions.md) - Node.js PR title/body style derived from merged 2024-2025 PRs
+- [rules/commit-and-pr-guideline.md](rules/commit-and-pr-guideline.md) - Commit message and PR description style, trailers, DCO sign-off, and validation
 - [rules/reviewing-prs.md](rules/reviewing-prs.md) - Reviewing PRs for correctness, clarity, and contribution quality
 
 ### Documentation
@@ -79,8 +78,7 @@ Read individual rule files for detailed explanations and code examples:
 ### Node.js contribution writing
 
 When drafting a `nodejs/node` commit or pull request, read
-[rules/commit-messages.md](rules/commit-messages.md) and
-[rules/pull-request-descriptions.md](rules/pull-request-descriptions.md).
+[rules/commit-and-pr-guideline.md](rules/commit-and-pr-guideline.md).
 Use terse subsystem-prefixed titles and plain, matter-of-fact prose. Lead with
 concrete behavior, explain the reason for the change, and omit hype, canned
 headings, file-by-file narration, and unsupported claims. Include the

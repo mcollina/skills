@@ -96,8 +96,8 @@ git checkout -b fix-issue-12345
 
 ### Commit Message Format
 
-Use [commit-messages.md](commit-messages.md) for the evidence-based Node.js
-house style and current DCO requirements. The default authored form is:
+Use [commit-and-pr-guideline.md](commit-and-pr-guideline.md) for the Node.js house style
+and current DCO requirements. The default authored form is:
 
 ```text
 subsystem[,subsystem...]: imperative description
@@ -176,7 +176,7 @@ node benchmark/fs/readfile.js
 ### Creating a PR
 
 Use the terse style in
-[pull-request-descriptions.md](pull-request-descriptions.md). Write the body to
+[commit-and-pr-guideline.md](commit-and-pr-guideline.md). Write the body to
 a file so Markdown is preserved:
 
 ```bash

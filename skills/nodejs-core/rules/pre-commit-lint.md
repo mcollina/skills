@@ -98,7 +98,7 @@ The rules it enforces are `subsystem`, `title-format`, `title-length`,
 `line-after-title`, `line-length`, `signed-off-by`, `metadata-end`,
 `fixes-url`, `co-authored-by-is-trailer`, and `assisted-by-is-trailer`, plus
 the two metadata rules skipped by `--no-validate-metadata`. See
-[commit-messages.md](commit-messages.md) for the house style those rules
+[commit-and-pr-guideline.md](commit-and-pr-guideline.md) for the house style those rules
 encode.
 
 Do not run `core-validate-commit` outside a `nodejs/node` checkout; its

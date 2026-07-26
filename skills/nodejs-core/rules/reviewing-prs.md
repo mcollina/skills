@@ -14,7 +14,7 @@ quality, writing clarity, and project conventions.
 
 ### Commit message
 
-See [commit-messages.md](commit-messages.md) for the full format spec.
+See [commit-and-pr-guideline.md](commit-and-pr-guideline.md) for the full format spec.
 During review, check:
 
 - Correct subsystem prefix (`fs:`, `stream:`, `http:`, `test:`, `doc:`, etc.)
@@ -26,7 +26,7 @@ During review, check:
 
 ### Pull request text
 
-See [pull-request-descriptions.md](pull-request-descriptions.md) for the full
+See [commit-and-pr-guideline.md](commit-and-pr-guideline.md) for the full
 style. During review, check:
 
 - The title is a concise candidate commit subject.
@@ -237,8 +237,7 @@ Reviewed-By: Your Name <your@email.com>
 - [Current contributing policy](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/CONTRIBUTING.md)
 - [Pull request and review guide](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/doc/contributing/pull-requests.md)
 - [Collaborator guide](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/doc/contributing/collaborator-guide.md)
-- Commit message format: [commit-messages.md](commit-messages.md)
-- PR description style:
-  [pull-request-descriptions.md](pull-request-descriptions.md)
+- Commit message and PR description style:
+  [commit-and-pr-guideline.md](commit-and-pr-guideline.md)
 - Build/test workflow: [build-and-test-workflow.md](build-and-test-workflow.md)
 - Primordials: [primordials.md](primordials.md)
