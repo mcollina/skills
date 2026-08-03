@@ -48,7 +48,17 @@ make lint-py-build && make lint-py     # only needed once for the -build step
 tools/lint-sh.mjs .                    # requires shellcheck on PATH
 ```
 
-Only commit once all of these are clean.
+Only commit once all of these are clean, and always commit with `-s`:
+
+```bash
+git add -A && git commit -s
+```
+
+**`-s` is not optional.** It adds the `Signed-off-by:` trailer that certifies
+the Developer Certificate of Origin; without it the `signed-off-by` rule fails
+in the commit-lint job and the change cannot land. It must carry the human
+contributor's name and email — never a tool or AI identity. Recover a missing
+sign-off with `git commit --amend --signoff`.
 
 Then validate the commit message you just wrote — Node.js runs a commit-lint
 CI job too:

@@ -301,8 +301,9 @@ $EDITOR src/node_options.cc
 # 2. Rebuild (MANDATORY)
 make -j$(nproc)
 
-# 3. Format C++
-make format-cpp
+# 3. Format C++ the way CI does — from the merge base, not just staged changes
+CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
+git --no-pager diff --exit-code
 
 # 4. Lint C++
 make lint-cpp
@@ -317,11 +318,7 @@ make cctest
 git add -A && git commit -s
 npx core-validate-commit --no-validate-metadata HEAD
 
-# 8. Before pushing, confirm the whole branch is formatted the way CI checks
-CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
-git --no-pager diff --exit-code
-
-# 9. Run broader tests
+# 8. Run broader tests
 make test-only
 ```
 
@@ -337,7 +334,8 @@ $EDITOR doc/api/cli.md
 make -j$(nproc)
 
 # 3. Format and lint
-make format-cpp
+CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
+git --no-pager diff --exit-code
 make lint
 
 # 4. Run targeted tests
@@ -389,11 +387,11 @@ substitute. See [pre-commit-lint.md](pre-commit-lint.md).
 
 ```bash
 # The CI will reject unformatted C++ code.
-# Always run after C++ changes:
+# Always run after C++ changes, before committing:
 make format-cpp-build   # first time only
-make format-cpp
 
-# And before pushing, check the whole branch the way CI does:
+# Use the merge-base form: bare `make format-cpp` only covers staged
+# changes, while CI formats the whole branch and fails on any diff.
 CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
 git --no-pager diff --exit-code
 ```

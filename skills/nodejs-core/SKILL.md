@@ -106,23 +106,46 @@ Before starting work, **ask the user** about their build configuration
 assume a specific setup. Most of the time, `./configure` has already been
 run and only `make -j$(nproc)` is needed to rebuild.
 
-### MANDATORY: Lint before every commit
+### MANDATORY: Lint and format before every commit
 
 Node.js runs a `Linters` CI workflow on every non-draft pull request, and on
 Unix `make test` runs **no** linters. Run `make lint` before each `git
 commit` — plus `make format-cpp` for C++ changes — so the lint jobs pass on
 the first CI run instead of costing a force-push and another full cycle.
 
-```
-build  →  make lint  →  (C++: make format-cpp)  →  git commit -s
-      →  npx core-validate-commit --no-validate-metadata HEAD
+```bash
+make -j$(nproc)                                        # rebuild first
+make lint                                              # JS, C++, MD, docs, YAML
+
+# C++ changes only — use the merge-base form, which is what CI checks:
+CLANG_FORMAT_START="$(git merge-base HEAD upstream/main)" make format-cpp
+git --no-pager diff --exit-code                        # must be empty
+
+git add -A && git commit -s                            # -s is mandatory
+npx core-validate-commit --no-validate-metadata HEAD
 ```
 
-`make lint` does not cover every CI lint job: Python (`make lint-py`), shell
-(`tools/lint-sh.mjs .`), C++ formatting, and commit-message validation are
-separate jobs. See [rules/pre-commit-lint.md](rules/pre-commit-lint.md) for
-the full gate, the CI-job-to-command mapping, and the merge-base form of
-`format-cpp` that matches what CI checks.
+Never skip a step because the change looks trivial, and never commit with
+"will fix lint in a follow-up".
+
+**Bare `make format-cpp` is not enough.** It defaults to
+`CLANG_FORMAT_START=HEAD` and formats only *staged* changes, while the
+`format-cpp` CI job formats everything from the merge base and fails on any
+resulting diff — so unformatted code committed earlier in the branch passes
+locally and fails in CI. Always pass the merge-base form shown above.
+
+**Every commit must be created with `git commit -s`.** The `-s` flag adds the
+`Signed-off-by:` trailer certifying the Developer Certificate of Origin.
+Without it the `signed-off-by` rule of `core-validate-commit` fails and the PR
+cannot land. The sign-off must be the human contributor's name and email —
+never sign off with a tool or AI identity, and never fabricate someone else's.
+If you forget it, amend with `git commit --amend --signoff`.
+
+`make lint` runs `lint-js`, `lint-cpp`, `lint-addon-docs`, `lint-md`, and
+`lint-yaml` — it does not cover every CI lint job. Python (`make lint-py`),
+shell (`tools/lint-sh.mjs .`), C++ formatting, and commit-message validation
+are separate jobs. See [rules/pre-commit-lint.md](rules/pre-commit-lint.md)
+for the full gate and the CI-job-to-command mapping.
 
 Validate every commit message with `core-validate-commit`, always with
 `--no-validate-metadata` — metadata validation is on by default and enforces
