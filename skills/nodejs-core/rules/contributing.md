@@ -225,8 +225,9 @@ PR look tidy; the landing process normally handles autosquashing. A fixup
 commit can identify its target explicitly:
 
 ```bash
+make lint                              # lint gate applies to fixups too
 git add my/changed/files
-git commit --fixup <target-commit>
+git commit -s --fixup <target-commit>
 git push origin fix-issue-12345
 ```
 
