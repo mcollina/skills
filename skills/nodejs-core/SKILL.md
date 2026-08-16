@@ -54,6 +54,7 @@ Read individual rule files for detailed explanations and code examples:
 
 ### Build & Contributing
 
+- [rules/ai-guidelines.md](rules/ai-guidelines.md) - Operational constraints for AI-assisted contributions
 - [rules/build-and-test-workflow.md](rules/build-and-test-workflow.md) - **The edit-build-lint-test cycle (start here)**
 - [rules/pre-commit-lint.md](rules/pre-commit-lint.md) - **Mandatory lint, format, and `core-validate-commit` gate for every commit so CI passes first time**
 - [rules/configure.md](rules/configure.md) - `./configure` flags for debug builds, ASan, Ninja, etc.
@@ -77,7 +78,9 @@ Read individual rule files for detailed explanations and code examples:
 
 ### Node.js contribution writing
 
-When drafting a `nodejs/node` commit or pull request, read
+When AI assists any `nodejs/node` contribution or communication, first read
+[rules/ai-guidelines.md](rules/ai-guidelines.md). When drafting a commit or pull
+request, also read
 [rules/commit-and-pr-guideline.md](rules/commit-and-pr-guideline.md).
 Use terse subsystem-prefixed titles and plain, matter-of-fact prose. Lead with
 concrete behavior, explain the reason for the change, and omit hype, canned

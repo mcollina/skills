@@ -323,9 +323,11 @@ On `<environment>`, `<benchmark command>` changed median startup time from
 Refs: https://github.com/nodejs/node/issues/12345
 ```
 
-### Create the PR with `gh`
+### Prepare the PR command for the human contributor
 
-Write the body to a file so Markdown and newlines are preserved:
+Write the body to a file so Markdown and newlines are preserved. An AI tool
+must not execute the final `gh pr create` command without the advance project
+approval described in [ai-guidelines.md](ai-guidelines.md):
 
 ```bash
 cat > /tmp/pr-body.md <<'EOF'
