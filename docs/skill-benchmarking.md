@@ -24,26 +24,6 @@ Record:
 - per-scenario deltas
 - per-criterion pass/fail
 
-## Recommended workflow (Tessl)
-
-Install tooling:
-
-```bash
-curl -fsSL https://get.tessl.io | sh
-```
-
-Install benchmark skill:
-
-```bash
-tessl i tessl-labs/review-model-performance
-```
-
-Then, from your agent session:
-
-```text
-Use review-model-performance to evaluate <skill-name>.
-```
-
 ## Release gate
 
 A change is **not ready** if any of these are true:

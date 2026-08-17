@@ -10,8 +10,6 @@ Add new entries at the top using the template from [`docs/skill-benchmarking.md`
 
 Method: lightweight cross-model checks using `subagent` with `anthropic/claude-haiku-4-5`, `anthropic/claude-sonnet-4-6`, and `anthropic/claude-opus-4-6`.
 
-> Note: This is a **quick directional eval**, not a full Tessl `review-model-performance` run.
-
 ### Scenario A — node-best-practices stream/ETL activation
 
 Criteria scored per response (3 total):
