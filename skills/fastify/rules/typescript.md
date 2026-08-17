@@ -7,6 +7,21 @@ metadata:
 
 # TypeScript Integration
 
+## Contents
+
+- [Type Stripping with Node.js](#type-stripping-with-nodejs)
+- [Basic Type Safety](#basic-type-safety)
+- [Typing Route Handlers](#typing-route-handlers)
+- [Type Providers](#type-providers)
+- [Typing Decorators](#typing-decorators)
+- [Typing Plugins](#typing-plugins)
+- [Typing Hooks](#typing-hooks)
+- [Typing Schema Objects](#typing-schema-objects)
+- [Shared Types](#shared-types)
+- [Type-Safe Route Registration](#type-safe-route-registration)
+- [Avoiding Type Gymnastics](#avoiding-type-gymnastics)
+- [Type Checking Without Compilation](#type-checking-without-compilation)
+
 ## Type Stripping with Node.js
 
 Use Node.js built-in type stripping (Node.js 22.6+):

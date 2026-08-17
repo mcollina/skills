@@ -7,6 +7,24 @@ metadata:
 
 # Logging with Pino
 
+## Contents
+
+- [Built-in Pino Integration](#built-in-pino-integration)
+- [Log Levels](#log-levels)
+- [Request-Scoped Logging](#request-scoped-logging)
+- [Structured Logging](#structured-logging)
+- [Logging Configuration by Environment](#logging-configuration-by-environment)
+- [Custom Serializers](#custom-serializers)
+- [Redacting Sensitive Data](#redacting-sensitive-data)
+- [Child Loggers](#child-loggers)
+- [Request Logging Configuration](#request-logging-configuration)
+- [Logging Errors](#logging-errors)
+- [Log Destinations](#log-destinations)
+- [Log Rotation](#log-rotation)
+- [Log Aggregation](#log-aggregation)
+- [Request ID Tracking](#request-id-tracking)
+- [Performance Considerations](#performance-considerations)
+
 ## Built-in Pino Integration
 
 Fastify uses Pino for high-performance logging:

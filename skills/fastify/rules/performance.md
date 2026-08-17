@@ -7,6 +7,26 @@ metadata:
 
 # Performance Optimization
 
+## Contents
+
+- [Fastify is Fast by Default](#fastify-is-fast-by-default)
+- [Use @fastify/under-pressure for Load Shedding](#use-fastifyunder-pressure-for-load-shedding)
+- [Always Define Response Schemas](#always-define-response-schemas)
+- [Avoid Dynamic Schema Compilation](#avoid-dynamic-schema-compilation)
+- [Use Logger Wisely](#use-logger-wisely)
+- [Connection Pooling](#connection-pooling)
+- [Avoid Blocking the Event Loop](#avoid-blocking-the-event-loop)
+- [Stream Large Responses](#stream-large-responses)
+- [Caching Strategies](#caching-strategies)
+- [Request Coalescing with async-cache-dedupe](#request-coalescing-with-async-cache-dedupe)
+- [Payload Limits](#payload-limits)
+- [Compression](#compression)
+- [Connection Timeouts](#connection-timeouts)
+- [Disable Unnecessary Features](#disable-unnecessary-features)
+- [Benchmarking](#benchmarking)
+- [Profiling](#profiling)
+- [Memory Management](#memory-management)
+
 ## Fastify is Fast by Default
 
 Fastify is designed for performance. Key optimizations are built-in:

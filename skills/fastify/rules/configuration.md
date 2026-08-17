@@ -7,6 +7,15 @@ metadata:
 
 # Application Configuration
 
+## Contents
+
+- [Use env-schema for Configuration](#use-env-schema-for-configuration)
+- [Configuration as Plugin](#configuration-as-plugin)
+- [Secrets Management](#secrets-management)
+- [Feature Flags](#feature-flags)
+- [Anti-Patterns to Avoid](#anti-patterns-to-avoid)
+- [Dynamic Configuration](#dynamic-configuration)
+
 ## Use env-schema for Configuration
 
 **Always use `env-schema` for configuration validation.** It provides JSON Schema validation for environment variables with sensible defaults.

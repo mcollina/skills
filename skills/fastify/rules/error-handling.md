@@ -7,6 +7,22 @@ metadata:
 
 # Error Handling in Fastify
 
+## Contents
+
+- [Default Error Handler](#default-error-handler)
+- [Custom Error Classes](#custom-error-classes)
+- [Custom Error Handler](#custom-error-handler)
+- [Error Response Schema](#error-response-schema)
+- [Reply Helpers with @fastify/sensible](#reply-helpers-with-fastifysensible)
+- [Async Error Handling](#async-error-handling)
+- [Hook Error Handling](#hook-error-handling)
+- [Not Found Handler](#not-found-handler)
+- [Error Wrapping](#error-wrapping)
+- [Validation Error Customization](#validation-error-customization)
+- [Error Cause Chain](#error-cause-chain)
+- [Plugin-Scoped Error Handlers](#plugin-scoped-error-handlers)
+- [Graceful Error Recovery](#graceful-error-recovery)
+
 ## Default Error Handler
 
 Fastify has a built-in error handler. Thrown errors automatically become HTTP responses:

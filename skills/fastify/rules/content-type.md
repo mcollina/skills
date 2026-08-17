@@ -7,6 +7,22 @@ metadata:
 
 # Content Type Parsing
 
+## Contents
+
+- [Default Content Type Parsers](#default-content-type-parsers)
+- [Custom Content Type Parsers](#custom-content-type-parsers)
+- [XML Parsing](#xml-parsing)
+- [Multipart Form Data](#multipart-form-data)
+- [Stream Processing](#stream-processing)
+- [Custom JSON Parser](#custom-json-parser)
+- [Content Type with Parameters](#content-type-with-parameters)
+- [Catch-All Parser](#catch-all-parser)
+- [Body Limit Configuration](#body-limit-configuration)
+- [Protocol Buffers](#protocol-buffers)
+- [Form Data with @fastify/formbody](#form-data-with-fastifyformbody)
+- [Content Negotiation](#content-negotiation)
+- [Validation After Parsing](#validation-after-parsing)
+
 ## Default Content Type Parsers
 
 Fastify includes parsers for common content types:

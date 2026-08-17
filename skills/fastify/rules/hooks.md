@@ -7,6 +7,26 @@ metadata:
 
 # Hooks and Request Lifecycle
 
+## Contents
+
+- [Request Lifecycle Overview](#request-lifecycle-overview)
+- [onRequest Hook](#onrequest-hook)
+- [preParsing Hook](#preparsing-hook)
+- [preValidation Hook](#prevalidation-hook)
+- [preHandler Hook](#prehandler-hook)
+- [preSerialization Hook](#preserialization-hook)
+- [onSend Hook](#onsend-hook)
+- [onResponse Hook](#onresponse-hook)
+- [onError Hook](#onerror-hook)
+- [onTimeout Hook](#ontimeout-hook)
+- [onRequestAbort Hook](#onrequestabort-hook)
+- [Application Lifecycle Hooks](#application-lifecycle-hooks)
+- [Scoped Hooks](#scoped-hooks)
+- [Hook Execution Order](#hook-execution-order)
+- [Stopping Hook Execution](#stopping-hook-execution)
+- [Route-Level Hooks](#route-level-hooks)
+- [Async Hook Patterns](#async-hook-patterns)
+
 ## Request Lifecycle Overview
 
 Fastify executes hooks in a specific order:

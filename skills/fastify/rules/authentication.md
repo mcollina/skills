@@ -7,6 +7,19 @@ metadata:
 
 # Authentication and Authorization
 
+## Contents
+
+- [JWT Authentication with @fastify/jwt](#jwt-authentication-with-fastifyjwt)
+- [Refresh Tokens](#refresh-tokens)
+- [Role-Based Access Control](#role-based-access-control)
+- [Permission-Based Authorization](#permission-based-authorization)
+- [API Key / Bearer Token Authentication](#api-key--bearer-token-authentication)
+- [OAuth 2.0 Integration](#oauth-20-integration)
+- [Session-Based Authentication](#session-based-authentication)
+- [Resource-Based Authorization](#resource-based-authorization)
+- [Password Hashing](#password-hashing)
+- [Rate Limiting for Auth Endpoints](#rate-limiting-for-auth-endpoints)
+
 ## JWT Authentication with @fastify/jwt
 
 Use `@fastify/jwt` for JSON Web Token authentication:

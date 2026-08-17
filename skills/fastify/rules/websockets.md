@@ -7,6 +7,21 @@ metadata:
 
 # WebSocket Support
 
+## Contents
+
+- [Using @fastify/websocket](#using-fastifywebsocket)
+- [WebSocket with Hooks](#websocket-with-hooks)
+- [Connection Options](#connection-options)
+- [Broadcast to All Clients](#broadcast-to-all-clients)
+- [Rooms/Channels Pattern](#roomschannels-pattern)
+- [Structured Message Protocol](#structured-message-protocol)
+- [Heartbeat/Ping-Pong](#heartbeatping-pong)
+- [Authentication](#authentication)
+- [Error Handling](#error-handling)
+- [Rate Limiting WebSocket Messages](#rate-limiting-websocket-messages)
+- [Graceful Shutdown](#graceful-shutdown)
+- [Full-Duplex Stream Pattern](#full-duplex-stream-pattern)
+
 ## Using @fastify/websocket
 
 Add WebSocket support to Fastify:

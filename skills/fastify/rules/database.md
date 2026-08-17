@@ -7,6 +7,18 @@ metadata:
 
 # Database Integration
 
+## Contents
+
+- [Use Official Fastify Database Adapters](#use-official-fastify-database-adapters)
+- [PostgreSQL with @fastify/postgres](#postgresql-with-fastifypostgres)
+- [MySQL with @fastify/mysql](#mysql-with-fastifymysql)
+- [MongoDB with @fastify/mongodb](#mongodb-with-fastifymongodb)
+- [Redis with @fastify/redis](#redis-with-fastifyredis)
+- [Database as Plugin](#database-as-plugin)
+- [Repository Pattern](#repository-pattern)
+- [Testing with Database](#testing-with-database)
+- [Connection Pool Configuration](#connection-pool-configuration)
+
 ## Use Official Fastify Database Adapters
 
 Always use the official Fastify database plugins from the `@fastify` organization. They provide proper connection pooling, encapsulation, and integration with Fastify's lifecycle.

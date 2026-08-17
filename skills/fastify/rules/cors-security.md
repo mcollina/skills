@@ -7,6 +7,24 @@ metadata:
 
 # CORS and Security
 
+## Contents
+
+- [CORS with @fastify/cors](#cors-with-fastifycors)
+- [Dynamic CORS Origin](#dynamic-cors-origin)
+- [Per-Route CORS](#per-route-cors)
+- [Security Headers with @fastify/helmet](#security-headers-with-fastifyhelmet)
+- [Configure Individual Headers](#configure-individual-headers)
+- [Rate Limiting](#rate-limiting)
+- [Redis-Based Rate Limiting](#redis-based-rate-limiting)
+- [CSRF Protection](#csrf-protection)
+- [Custom Security Headers](#custom-security-headers)
+- [Secure Cookies](#secure-cookies)
+- [Request Validation Security](#request-validation-security)
+- [IP Filtering](#ip-filtering)
+- [Trust Proxy](#trust-proxy)
+- [HTTPS Redirect](#https-redirect)
+- [Security Best Practices Summary](#security-best-practices-summary)
+
 ## CORS with @fastify/cors
 
 Enable Cross-Origin Resource Sharing:

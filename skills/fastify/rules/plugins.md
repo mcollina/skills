@@ -7,6 +7,20 @@ metadata:
 
 # Plugin Development and Encapsulation
 
+## Contents
+
+- [Understanding Encapsulation](#understanding-encapsulation)
+- [Breaking Encapsulation with fastify-plugin](#breaking-encapsulation-with-fastify-plugin)
+- [Plugin Registration Order](#plugin-registration-order)
+- [Plugin Options](#plugin-options)
+- [Plugin Factory Pattern](#plugin-factory-pattern)
+- [Plugin Dependencies](#plugin-dependencies)
+- [Scoped Plugins for Route Groups](#scoped-plugins-for-route-groups)
+- [Prefix Routes with Register](#prefix-routes-with-register)
+- [Plugin Metadata](#plugin-metadata)
+- [Autoload Plugins](#autoload-plugins)
+- [Testing Plugins in Isolation](#testing-plugins-in-isolation)
+
 ## Understanding Encapsulation
 
 Fastify's plugin system provides automatic encapsulation. Each plugin creates its own context, isolating decorators, hooks, and plugins registered within it:

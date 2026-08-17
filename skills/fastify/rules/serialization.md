@@ -7,6 +7,25 @@ metadata:
 
 # Response Serialization
 
+## Contents
+
+- [Use TypeBox for Type-Safe Response Schemas](#use-typebox-for-type-safe-response-schemas)
+- [Fast JSON Stringify](#fast-json-stringify)
+- [Response Schema Benefits](#response-schema-benefits)
+- [Multiple Status Code Schemas](#multiple-status-code-schemas)
+- [Default Response Schema](#default-response-schema)
+- [Custom Serializers](#custom-serializers)
+- [Shared Serializers](#shared-serializers)
+- [Serialization with Type Coercion](#serialization-with-type-coercion)
+- [Nullable Fields](#nullable-fields)
+- [Additional Properties](#additional-properties)
+- [Nested Objects](#nested-objects)
+- [Date Serialization](#date-serialization)
+- [BigInt Serialization](#bigint-serialization)
+- [Stream Responses](#stream-responses)
+- [Pre-Serialization Hook](#pre-serialization-hook)
+- [Disable Serialization](#disable-serialization)
+
 ## Use TypeBox for Type-Safe Response Schemas
 
 Define response schemas with TypeBox for automatic TypeScript types and fast serialization:

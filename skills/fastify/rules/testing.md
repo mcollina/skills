@@ -7,6 +7,23 @@ metadata:
 
 # Testing Fastify Applications
 
+## Contents
+
+- [Using inject() for Request Testing](#using-inject-for-request-testing)
+- [Testing with Headers and Authentication](#testing-with-headers-and-authentication)
+- [Testing Query Parameters](#testing-query-parameters)
+- [Testing URL Parameters](#testing-url-parameters)
+- [Testing Validation Errors](#testing-validation-errors)
+- [Testing File Uploads](#testing-file-uploads)
+- [Testing Streams](#testing-streams)
+- [Mocking Dependencies](#mocking-dependencies)
+- [Testing Plugins in Isolation](#testing-plugins-in-isolation)
+- [Testing Hooks](#testing-hooks)
+- [Test Factory Pattern](#test-factory-pattern)
+- [Database Testing with Transactions](#database-testing-with-transactions)
+- [Parallel Test Execution](#parallel-test-execution)
+- [Running Tests](#running-tests)
+
 ## Using inject() for Request Testing
 
 Fastify's `inject()` method simulates HTTP requests without network overhead:

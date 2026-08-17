@@ -7,6 +7,26 @@ metadata:
 
 # JSON Schema Validation
 
+## Contents
+
+- [Use TypeBox for Type-Safe Schemas](#use-typebox-for-type-safe-schemas)
+- [TypeBox Common Patterns](#typebox-common-patterns)
+- [Register TypeBox Schemas Globally](#register-typebox-schemas-globally)
+- [Plain JSON Schema (Alternative)](#plain-json-schema-alternative)
+- [Request Validation Parts](#request-validation-parts)
+- [Shared Schemas with $id](#shared-schemas-with-id)
+- [Array Schemas](#array-schemas)
+- [Custom Formats](#custom-formats)
+- [Custom Keywords](#custom-keywords)
+- [Coercion](#coercion)
+- [Validation Error Handling](#validation-error-handling)
+- [Schema Compiler Options](#schema-compiler-options)
+- [Nullable Fields](#nullable-fields)
+- [Conditional Validation](#conditional-validation)
+- [Schema Organization](#schema-organization)
+- [OpenAPI/Swagger Integration](#openapiswagger-integration)
+- [Performance Considerations](#performance-considerations)
+
 ## Use TypeBox for Type-Safe Schemas
 
 **Prefer TypeBox for defining schemas.** It provides TypeScript types automatically and compiles to JSON Schema:

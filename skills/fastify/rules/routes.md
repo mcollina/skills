@@ -7,6 +7,24 @@ metadata:
 
 # Route Organization and Handlers
 
+## Contents
+
+- [Basic Route Definition](#basic-route-definition)
+- [Route Parameters](#route-parameters)
+- [Query String Parameters](#query-string-parameters)
+- [Request Body](#request-body)
+- [Headers](#headers)
+- [Reply Methods](#reply-methods)
+- [Route Organization by Feature](#route-organization-by-feature)
+- [Route Constraints](#route-constraints)
+- [Route Prefixing](#route-prefixing)
+- [Multiple Methods](#multiple-methods)
+- [404 Handler](#404-handler)
+- [Method Not Allowed](#method-not-allowed)
+- [Route-Level Configuration](#route-level-configuration)
+- [Async Route Registration](#async-route-registration)
+- [Auto-loading Routes with @fastify/autoload](#auto-loading-routes-with-fastifyautoload)
+
 ## Basic Route Definition
 
 Define routes with the shorthand methods or the full route method:

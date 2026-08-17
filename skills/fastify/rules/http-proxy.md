@@ -7,6 +7,17 @@ metadata:
 
 # HTTP Proxy and Reply.from()
 
+## Contents
+
+- [@fastify/http-proxy](#fastifyhttp-proxy)
+- [@fastify/reply-from](#fastifyreply-from)
+- [API Gateway Pattern](#api-gateway-pattern)
+- [Request Body Handling](#request-body-handling)
+- [Error Handling](#error-handling)
+- [WebSocket Proxying](#websocket-proxying)
+- [Timeout Configuration](#timeout-configuration)
+- [Caching Proxied Responses](#caching-proxied-responses)
+
 ## @fastify/http-proxy
 
 Use `@fastify/http-proxy` for simple reverse proxy scenarios:

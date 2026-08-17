@@ -7,6 +7,20 @@ metadata:
 
 # Decorators and Extensions
 
+## Contents
+
+- [Understanding Decorators](#understanding-decorators)
+- [Decorator Types](#decorator-types)
+- [TypeScript Declaration Merging](#typescript-declaration-merging)
+- [Decorator Initialization](#decorator-initialization)
+- [Dependency Injection with Decorators](#dependency-injection-with-decorators)
+- [Request Context Pattern](#request-context-pattern)
+- [Reply Helpers](#reply-helpers)
+- [Checking Decorators](#checking-decorators)
+- [Decorator Encapsulation](#decorator-encapsulation)
+- [Functional Decorators](#functional-decorators)
+- [Async Decorator Initialization](#async-decorator-initialization)
+
 ## Understanding Decorators
 
 Decorators add custom properties and methods to Fastify instances, requests, and replies:
