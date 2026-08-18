@@ -1,8 +1,8 @@
 ---
-name: modules
-description: ES Modules and CommonJS patterns
+name: node-modules
+description: Node.js ES Modules (ESM) and CommonJS patterns including import/export syntax, file extensions in ESM imports, barrel exports with index files, named vs default exports, dynamic imports for code splitting, conditional loading, and __dirname/__filename alternatives with import.meta.dirname and import.meta.filename. Use when choosing module systems, migrating from CommonJS to ESM, structuring package exports, or resolving module path issues in Node.js.
 metadata:
-  tags: modules, esm, commonjs, imports, exports
+  tags: node, nodejs, modules, esm, commonjs, imports, exports, dynamic-import, barrel-exports, import-meta
 ---
 
 # Node.js Modules

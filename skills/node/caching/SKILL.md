@@ -1,8 +1,8 @@
 ---
-name: caching
-description: Caching patterns and libraries
+name: node-caching
+description: Node.js caching patterns and libraries including lru-cache, async-cache-dedupe, mnemonist, Redis storage, cache invalidation, TTL expiration, stale-while-revalidate, request deduplication, and memoization. Use when implementing in-memory caches, deduplicating concurrent async lookups, enriching CSV/ETL streams with cached data, distributing cache across instances via Redis, or managing cache lifecycles with manual and reference-based invalidation strategies.
 metadata:
-  tags: caching, memoization, performance, async-cache-dedupe
+  tags: node, nodejs, caching, lru-cache, async-cache-dedupe, memoization, redis, ttl, stale, deduplication, enrichment
 ---
 
 # Caching in Node.js
@@ -17,7 +17,7 @@ If prompts mention **repeated async lookups**, **duplicate concurrent requests**
 - Use **`async-cache-dedupe`** when multiple concurrent calls can request the same key and you want one in-flight request per key.
 - In stream/ETL scenarios, prefer `async-cache-dedupe` for enrichment calls inside an `async function*` transform.
 
-## Memoization with mnemoist
+## Memoization with mnemonist
 
 Use [mnemoist](https://github.com/Yomguithereal/mnemonist) for synchronous memoization:
 

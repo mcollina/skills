@@ -1,13 +1,15 @@
 ---
-name: flaky-tests
-description: Identifying and diagnosing flaky tests with node:test
+name: node-flaky-tests
+description: Diagnosing and fixing flaky tests in Node.js with node:test runner. Covers race conditions, timing issues, shared state, port conflicts, test order dependencies, unhandled promise rejections, resource cleanup failures, CI-specific flakiness, t.mock.timers for time mocking, retry patterns for identification, and deterministic test isolation strategies. Use when tests pass locally but fail in CI, tests are intermittent, or you need to make Node.js tests reliable and reproducible.
 metadata:
-  tags: testing, flaky-tests, node-test, debugging, ci
+  tags: node, nodejs, testing, flaky-tests, node-test, race-conditions, timing, ci, debugging, t-mock-timers
 ---
 
 # Identifying and Diagnosing Flaky Tests
 
 Flaky tests are tests that pass or fail intermittently without code changes. They erode trust in the test suite and waste debugging time. This guide helps identify root causes and fix them.
+
+The workflow is to isolate the test with `--test-only` → check for shared state or timer dependencies → inspect async teardown order → add retry logic as a temporary diagnostic step → fix root cause. 
 
 ## Identifying Which Test/File is Timing Out
 

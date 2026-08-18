@@ -1,8 +1,8 @@
 ---
-name: testing
-description: Testing strategies for Node.js applications
+name: node-testing
+description: Node.js testing strategies using the built-in node:test runner (Node.js 22+). Covers describe/it/before/after hooks, mocking with t.mock.fn and t.mock.method, test organization alongside source files, snapshot testing, lifecycle hooks for setup/teardown, test isolation and independence, EventEmitter timing in tests, and running tests with --test flags including coverage and watch mode. Use when writing unit or integration tests for Node.js applications with the native test runner.
 metadata:
-  tags: testing, unit-tests, integration-tests, mocking, node-test
+  tags: node, nodejs, testing, unit-tests, integration-tests, mocking, node-test, t-mock-fn, t-mock-method, snapshots, lifecycle-hooks
 ---
 
 # Testing in Node.js
@@ -216,3 +216,8 @@ node --test --experimental-test-coverage
 # Watch mode
 node --test --watch
 ```
+
+## Related Skills
+
+- `node-flaky-tests` - Identifying and diagnosing flaky tests
+- `node-stuck-processes-and-tests` - Diagnosing stuck processes and hanging tests

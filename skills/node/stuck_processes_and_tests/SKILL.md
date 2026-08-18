@@ -1,15 +1,17 @@
 ---
-name: stuck-processes-and-tests
-description: Diagnosing Node.js processes that do not exit and tests that get stuck
+name: node-stuck-processes-and-tests
+description: Diagnosing Node.js processes that do not exit and tests that get stuck during node --test runs. Covers open handle detection with why-is-node-running, SIGUSR1 diagnostics, resource teardown patterns with t.after(), deterministic cleanup for HTTP servers/timers/DB connections/worker threads/file watchers, and stress testing fixes. Use when node --test hangs, CI times out after tests, process does not exit cleanly, or you see open handles preventing shutdown.
 metadata:
-  tags: node, debugging, testing, hangs, open-handles, diagnostics
+  tags: node, nodejs, stuck, hanging, open-handles, why-is-node-running, teardown, t-after, cleanup, ci-timeout
 ---
 
 # Diagnosing Stuck Node.js Processes and Hanging Tests
 
+The workflow is: (`node --test` hangs, "process did not exit", CI timeout, open handles): isolate file/test → run with explicit timeout/reporter → inspect handles via `why-is-node-running` (`SIGUSR1`) → patch deterministic teardown in resource-creation scope → rerun isolated + full suite until stable.
+
 ## Activation triggers (apply this rule immediately)
 
-Use this rule when prompts/logs include any of:
+Use this skill when prompts/logs include any of:
 - "`node --test` hangs" / "test run never exits"
 - "CI timed out" after tests appear done
 - "process is still running" / "did not exit cleanly"
@@ -117,8 +119,8 @@ it('serves requests', async (t) => {
 - [ ] CI completes with no timeout
 - [ ] `why-is-node-running` shows no unexpected leftover handles
 
-## Related rules
+## Related Skills
 
-- [flaky-tests.md](flaky-tests.md)
-- [testing.md](testing.md)
-- [graceful-shutdown.md](graceful-shutdown.md)
+- `node-flaky-tests` - Identifying and diagnosing flaky tests
+- `node-testing` - Testing strategies for Node.js applications
+- `node-graceful-shutdown` - Graceful shutdown and signal handling

@@ -1,11 +1,13 @@
 ---
-name: graceful-shutdown
-description: Graceful shutdown and signal handling
+name: node-graceful-shutdown
+description: Node.js graceful shutdown patterns using close-with-grace, signal handling (SIGTERM/SIGINT), HTTP server drain, Kubernetes termination grace period, health check integration during shutdown, multiple resource cleanup ordering, and Fastify onClose hooks. Use when implementing clean process termination, container orchestration shutdown (Kubernetes/Docker), draining in-flight requests, closing database/Redis connections, or preventing data loss on process exit.
 metadata:
-  tags: shutdown, signals, cleanup, health-checks, close-with-grace
+  tags: node, nodejs, graceful-shutdown, signals, sigterm, sigint, close-with-grace, kubernetes, cleanup, health-checks, drain
 ---
 
 # Graceful Shutdown in Node.js
+
+The workflow is to register signal handlers (SIGTERM/SIGINT) → stop accepting new work → drain in-flight requests → close external connections (DB, cache) → exit with appropriate code.
 
 ## Use close-with-grace
 
@@ -202,3 +204,7 @@ for (const signal of signals) {
   process.on(signal, () => shutdown(signal));
 }
 ```
+
+## Example: Full Graceful HTTP Server
+
+See `assets/graceful-server.ts` for a complete example demonstrating proper shutdown handling without connection tracking, and `assets/graceful-server.test.ts` for the corresponding test suite.
