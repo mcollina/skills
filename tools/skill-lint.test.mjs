@@ -13,20 +13,41 @@ test('every skill satisfies the structural contracts', async () => {
   );
 });
 
-test('the nodejs-* skills stay within their activation budget', async () => {
-  // The point of splitting nodejs-core was to keep every router small enough
-  // that firing a skill — including firing one by mistake — is cheap. If one
-  // of these creeps over budget it has started covering more than one task.
+test('every skill stays within its resident and activation budget', async () => {
+  // Routers must stay small enough that firing a skill — including firing one
+  // by mistake — is cheap. A router over budget has started covering more than
+  // one task, or is restating its own description in the body.
+  //
+  // Rule-file size is deliberately not asserted: it is advisory, and a long
+  // reference file that is read rarely is much cheaper than a short router
+  // that is loaded on every activation.
   const skills = await measureAll();
-  const nodejsSkills = skills.filter((s) => s.name.startsWith('nodejs-'));
+  assert.ok(skills.length >= 18, 'expected the full skill set to be measurable');
 
-  assert.ok(nodejsSkills.length >= 8, 'expected the split nodejs-* skills to exist');
-
-  const over = findViolations(nodejsSkills).filter((v) => v.tier === 'activation' || v.tier === 'resident');
+  const over = findViolations(skills).filter((v) => v.tier === 'activation' || v.tier === 'resident');
   assert.deepEqual(
     over.map((v) => `${v.skill} ${v.tier} ${v.actual} > ${v.budget}`),
     [],
   );
+});
+
+test('no skill restates its own routing in the body', async () => {
+  // The description routes. A "When to use" list in the body repeats that
+  // decision after it has been made, costing activation tokens on every fire
+  // without changing behaviour.
+  const { readFile, readdir } = await import('node:fs/promises');
+  const dirs = (await readdir('skills', { withFileTypes: true })).filter((d) => d.isDirectory());
+  const offenders = [];
+  for (const dir of dirs) {
+    let text;
+    try {
+      text = await readFile(`skills/${dir.name}/SKILL.md`, 'utf8');
+    } catch {
+      continue;
+    }
+    if (/^##+ +(When to use|Activation examples)\s*$/im.test(text)) offenders.push(dir.name);
+  }
+  assert.deepEqual(offenders, []);
 });
 
 test('no single skill dominates the resident index', async () => {

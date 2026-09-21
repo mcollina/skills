@@ -6,6 +6,50 @@ Add new entries at the top using the template from [`docs/skill-benchmarking.md`
 
 ---
 
+## PENDING — router slimming across the remaining nine skills
+
+Applied the same tiering to every skill outside the `nodejs-*` set. No rule
+content was rewritten; material moved from `SKILL.md` into new `rules/` files,
+and body-level "When to use" blocks were removed where the description already
+carried the same routing signals.
+
+| skill | activation before | after | change |
+| --- | --- | --- | --- |
+| `oauth` | 1591 | 489 | walkthrough → `rules/`, 4 fabricated refs removed |
+| `node` | 1423 | 980 | six rules were indexed twice; merged |
+| `documentation` | 1242 | 617 | four Diátaxis modes → `rules/` |
+| `octocat` | 1134 | 452 | PR + git sequences → `rules/`, signing rules de-duplicated |
+| `typescript-magician` | 1030 | 883 | capability list duplicated the rules index |
+| `fastify` | 777 | 686 | routing block removed |
+| `init` | 762 | 688 | routing block removed |
+| `linting-neostandard-eslint9` | 556 | 440 | routing block removed |
+| `snipgrapher` | 555 | 483 | routing block removed |
+| `skill-optimizer` | 463 | 378 | routing block removed |
+
+**Re-benchmark before shipping.** Two specific risks:
+
+1. **Scenario A is directly affected.** It measures `node`'s streams/ETL
+   checklist, which moved position within `SKILL.md` and whose description was
+   rewritten. The checklist's four criteria were preserved verbatim in
+   substance, and CSV/ETL trigger terms were *added* to the description, but
+   the 33%/67%/33% → 100% result must be reproduced.
+2. **Removing body-level "When to use" blocks is the one change that contradicts
+   house doctrine.** `skill-optimizer/rules/activation-design.md` recommends
+   listing task signals near the top of a skill. The argument for removal is
+   that routing happens on the frontmatter description, so the body list is
+   paid after the decision is made — but that depends on how the harness
+   retrieves skills. If activation drops for any skill in the table above,
+   this is the change to revert first.
+
+Two pre-existing defects were fixed in passing: `oauth/SKILL.md` referenced four
+files (`DEVICE_FLOW.md`, `TOKEN_VALIDATION.md`, `CLIENT_CREDENTIALS.md`,
+`MOBILE_OAUTH.md`) that exist nowhere in the repository, and its description
+claimed coverage of device and client-credentials flows that the skill does not
+contain. Both would cause the model to improvise guidance under the skill's
+authority.
+
+---
+
 ## PENDING — `nodejs-core` split into eight task-scoped skills
 
 `nodejs-core` was replaced by `nodejs-contributing`, `nodejs-build`,

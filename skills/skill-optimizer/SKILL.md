@@ -5,14 +5,6 @@ metadata:
   tags: skills, optimization, benchmarking, activation, regressions, prompt-engineering
 ---
 
-## When to use
-
-Use this skill when you need to:
-- Improve whether a skill is actually applied by models
-- Diagnose why some criteria fail across all models
-- Prevent a skill from making outputs worse
-- Refactor skill text for stronger retrieval under context pressure
-- Build repeatable benchmark loops and release gates
 
 ## Optimization loop (default workflow)
 

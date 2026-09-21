@@ -92,6 +92,14 @@ Consequences for editing:
 - **Write the delta, not the tutorial.** The valuable content is what the model
   cannot guess — project-specific flags, traps, and conventions — not general
   background it already has.
+- **Do not restate routing in the body.** The frontmatter `description` decides
+  whether a skill fires. A "When to use" list in the body repeats that decision
+  after it has been made, so it costs activation tokens on every fire and
+  changes nothing. Put trigger signals in the description instead. Enforced by
+  `npm test`.
+- **Never name a file that does not exist.** An agent told to read a missing
+  file will either fail or invent its contents. Reference rule files as real
+  links so `npm run skill:lint` can verify them.
 
 ## Editing rules for this repo
 

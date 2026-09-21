@@ -14,6 +14,12 @@
 //   4. Every relative link in SKILL.md resolves to a real file.
 //   5. No rule file links into a sibling skill by relative path — skills
 //      install independently, so those paths do not resolve at runtime.
+//   5b. Every prose mention of a `rules/...` path resolves. Skills sometimes
+//      name a rule file without making it a link, and an agent told to read a
+//      file that does not exist will either fail or invent its contents.
+//      Only `rules/`-qualified references are checked: a bare filename in
+//      prose is usually a file in the *user's* repo (README.md) or in a target
+//      project (doc/api/cli.md), which this linter cannot verify.
 //   6. tile.json, when present, registers the skill under exactly the name
 //      SKILL.md declares. The tile's own `name` is a registry slug and is
 //      allowed to differ from the directory.
@@ -34,10 +40,16 @@ const LINK_RE = /\[[^\]]*\]\(([^)]+)\)/g;
 // indistinguishable from a markdown link, and these rule files are full of
 // them. Newlines are preserved so any future line-number reporting stays true.
 function stripCode(text) {
-  return text
-    .replace(/^```[\s\S]*?^```/gm, (m) => m.replace(/[^\n]/g, ' '))
-    .replace(/`[^`\n]*`/g, (m) => ' '.repeat(m.length));
+  return stripFences(text).replace(/`[^`\n]*`/g, (m) => ' '.repeat(m.length));
 }
+
+// Fenced blocks only. Inline code is preserved because prose references to
+// other documents are conventionally backticked ("see `DEVICE_FLOW.md`"), so
+// blanking inline code would hide exactly the references we want to check.
+function stripFences(text) {
+  return text.replace(/^```[\s\S]*?^```/gm, (m) => m.replace(/[^\n]/g, ' '));
+}
+
 
 function parseFrontmatter(text) {
   const match = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text);
@@ -75,6 +87,24 @@ async function listRules(dir) {
 
 function isExternal(href) {
   return /^(https?:|mailto:|#)/.test(href);
+}
+
+let ruleIndex = null;
+// Cross-skill references are written by name ("`primordials.md` in the
+// **nodejs-source** skill"), so a bare filename is legitimate as long as the
+// file exists somewhere in the corpus.
+async function findRuleAnywhere(filename) {
+  if (ruleIndex === null) {
+    ruleIndex = new Set();
+    const entries = await readdir(SKILLS_DIR, { withFileTypes: true });
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      for (const rule of await listRules(join(SKILLS_DIR, entry.name, 'rules'))) {
+        ruleIndex.add(rule.split('/').pop());
+      }
+    }
+  }
+  return ruleIndex.has(filename.split('/').pop());
 }
 
 export async function lintSkill(name) {
@@ -145,6 +175,27 @@ export async function lintSkill(name) {
       } else if (!(await exists(target))) {
         problems.push({ skill: name, rule: 'dead-link', message: `rules/${rule} links to missing ${clean}` });
       }
+    }
+  }
+
+  // --- prose references to rule files that do not exist -------------------------
+  const docs = [['SKILL.md', text], ...(await Promise.all(
+    rules.map(async (r) => [`rules/${r}`, await readFile(join(dir, 'rules', r), 'utf8')]),
+  ))];
+
+  for (const [where, raw] of docs) {
+    const content = stripFences(raw)
+      .replace(/https?:\/\/\S+/g, ' ')  // bare URLs are not local references
+      .replace(LINK_RE, ' ');          // real links are checked above
+
+    for (const [, ref] of content.matchAll(/\b(rules\/[\w.-]+\.md)\b/g)) {
+      if (await exists(resolve(dir, ref))) continue;
+      if (await findRuleAnywhere(ref)) continue; // cross-skill reference by name
+      problems.push({
+        skill: name,
+        rule: 'dangling-reference',
+        message: `${where} names "${ref}", which exists in no skill`,
+      });
     }
   }
 
