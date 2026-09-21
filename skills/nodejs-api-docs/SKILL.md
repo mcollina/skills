@@ -1,6 +1,6 @@
 ---
 name: nodejs-api-docs
-description: Edits the API reference under doc/api/ in the nodejs/node repository. Use when adding or changing doc/api/*.md, writing YAML changes metadata for added/deprecated APIs, ordering reference links, documenting a new error code, or adjusting code examples so they pass the documentation linters.
+description: Edits the API reference under doc/api/ in the nodejs/node repository. Use when adding or changing doc/api/*.md, deciding where a new method, event, or class belongs in a doc file, writing YAML changes metadata for added or deprecated APIs, ordering reference links, documenting a new error code, or adjusting code examples so they pass the documentation linters.
 metadata:
   tags: nodejs-core, doc-api, api-reference, documentation-lint, yaml-metadata, error-codes, deprecations
 ---
@@ -20,8 +20,14 @@ skill instead.
 2. **Code examples are linted.** `make lint-md` and `lint-addon-docs` run over
    `doc/api/`, so examples must be valid, runnable, and correctly fenced with a
    language tag.
-3. **Reference links go at the bottom in sorted order.** The docs use
-   reference-style links with a maintained, alphabetised block.
+3. **Insert new APIs in alphabetical position — constructor, then events, then
+   members.** Appending to the end of a section is the most common mistake in
+   doc PRs, because **no linter catches it**. See
+   [rules/documentation.md](rules/documentation.md) for the sort key and what
+   to do when a section is already out of order.
+4. **Reference links go at the bottom in sorted order.** The docs use
+   reference-style links with a maintained, alphabetised block. Unlike API
+   ordering, `make lint-md` does enforce this one.
 
 ## Rules
 

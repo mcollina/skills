@@ -2,7 +2,7 @@
   "name": "mcollina/nodejs-api-docs",
   "version": "0.1.0",
   "private": false,
-  "summary": "Edits the API reference under doc/api/ in the nodejs/node repository. Use when adding or changing doc/api/*.md, writing YAML changes metadata for added/deprecated APIs, ordering reference links, documenting a new error code, or adjusting code examples so they pass the documentation linters.",
+  "summary": "Edits the API reference under doc/api/ in the nodejs/node repository. Use when adding or changing doc/api/*.md, deciding where a new method, event, or class belongs in a doc file, writing YAML changes metadata for added or deprecated APIs, ordering reference links, documenting a new error code, or adjusting code examples so they pass the documentation linters.",
   "skills": {
     "nodejs-api-docs": {
       "path": "SKILL.md"

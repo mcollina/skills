@@ -81,9 +81,72 @@ Stability levels: `0 - Deprecated`, `1 - Experimental`, `2 - Stable`.
 * Default values use `**Default:** \`value\``
 * Nested options are indented with two spaces
 
-### Method ordering
+### API ordering
 
-API methods within a doc file should be listed in alphabetical order.
+**No linter enforces this.** `make lint-md` checks link reference ordering and
+`alphabetize-errors` checks `lib/internal/errors.js`, but nothing validates the
+order of API headings in `doc/api/`. It is enforced only by review, which is
+why it is the ordering rule most often missed.
+
+Within any one section, siblings appear in this sequence:
+
+1. The constructor, `new Thing(...)`, first.
+2. `Event: 'name'` entries, alphabetical by event name.
+3. Everything else — methods, properties, class properties — alphabetical.
+
+From `net.md`:
+
+```text
+### `new net.Server([options][, connectionListener])`   <- constructor
+### Event: `'close'`                                    <- events, alphabetical
+### Event: `'connection'`
+### Event: `'error'`
+### Event: `'listening'`
+### `server.address()`                                  <- members, alphabetical
+### `server.close([callback])`
+### `server.getConnections(callback)`
+```
+
+At the top level of a file, `Class:` sections precede module-level functions.
+That falls out of the sort rather than being a separate rule: class names are
+PascalCase and members are camelCase, so an uppercase-first comparison places
+them first anyway.
+
+#### The sort key
+
+Compare the name **after** the receiver prefix, not the whole heading:
+
+| Heading | Sort key |
+| --- | --- |
+| `` ### `server.address()` `` | `address` |
+| `` ### `dns.resolveCaa(hostname, callback)` `` | `resolveCaa` |
+| `` ### Class: `net.Socket` `` | `Socket` |
+| `` ### Event: `'connection'` `` | `connection` |
+
+Digits sort before letters, so `resolve`, `resolve4`, `resolve6`, `resolveAny`
+is correct. Parameters play no part: `readable.read([size])` sorts on `read`.
+
+#### Inserting into a section that is already out of order
+
+Roughly half the sibling groups in `doc/api/` have at least one entry out of
+place — concentrated in newer modules and in blocks where members were appended
+over the years rather than inserted. Examples in the current tree:
+
+- `dns.md` has `resolveCname` before `resolveCaa`, and `getDefaultResultOrder`
+  after `setDefaultResultOrder`.
+- `net.md` has `Event: 'drop'` after `Event: 'listening'`, and
+  `server.dropMaxConnection` after `server.maxConnections`.
+
+Put your new entry where it *should* go alphabetically. Do not reorder the
+surrounding entries in the same pull request — that turns a small reviewable
+change into a large diff and hides the actual addition. A pure reordering is a
+legitimate standalone `doc:` commit.
+
+#### `[Symbol.*]` members
+
+Placement of `obj[Symbol.asyncIterator]()` and similar is genuinely
+inconsistent across the tree; some files sort them among the methods, others
+group them after the named members. Match whatever the surrounding file does.
 
 ## Link Reference Definitions (CRITICAL)
 
