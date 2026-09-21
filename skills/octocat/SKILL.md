@@ -7,16 +7,29 @@ metadata:
 
 ## Non-negotiables
 
-1. **Never change git signing configuration.** Do not touch `user.signingkey`
+1. **Never mutate without explicit permission.** Inspect freely; stop before
+   every write to the remote, to history, or to the working tree. Show the
+   exact command and any text it would publish, then wait.
+   - **Approval for one command is not standing approval for the next**, and
+     approval to draft is not approval to post — the user must have read the
+     text, not merely agreed to the action.
+   - Classify by effect, not by how the command reads: `git checkout`,
+     `switch`, and `stash` can discard uncommitted work; `git pull` merges
+     where `fetch` does not; `gh api` writes as soon as it carries
+     `-X POST`/`PATCH`/`DELETE`; `gh run rerun` and `gh workflow run` spend CI
+     and fire side effects.
+   - Where a repository's own `AGENTS.md` is stricter, it wins.
+
+2. **Never change git signing configuration.** Do not touch `user.signingkey`
    or signing mode in user or repo config. If signing is already enabled and
    working, use it. If it is not, proceed without it — do not enable it.
-2. **Never add AI attribution.** No `Co-Authored-By: Claude` or any equivalent
+3. **Never add AI attribution.** No `Co-Authored-By: Claude` or any equivalent
    co-authorship or sign-off trailer naming a tool.
-3. **Use `gh`, never the web interface.** Do not tell the user to click through
+4. **Use `gh`, never the web interface.** Do not tell the user to click through
    github.com for something `gh` can do.
-4. **A bare github.com URL is a sufficient trigger.** Treat the URL alone as
-   the instruction, resolve it with `gh`/`git` before asking clarifying
-   questions.
+5. **A bare github.com URL is a sufficient trigger.** Treat the URL alone as
+   the instruction, and resolve it with the read-only commands above before
+   asking clarifying questions.
 
 ## First move
 

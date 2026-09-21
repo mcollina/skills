@@ -7,6 +7,10 @@ metadata:
 
 # Complex git operations
 
+**Every sequence here mutates history or the working tree.** Get explicit
+approval before starting one, and state which commits or branches it will
+touch. Approval to start a rebase is not approval to force-push the result.
+
 Each sequence ends in a verification step. Run it — the shared failure mode for
 all of these is believing the operation succeeded when it did not.
 
@@ -33,11 +37,15 @@ git status                     # confirm clean
 
 ## Branch cleanup
 
+`git branch --merged` and `git fetch --prune` are safe. The two deletions are
+not, and `push origin --delete` is effectively irreversible for anyone else
+who has not fetched the branch — confirm each one by name.
+
 ```bash
-git branch --merged main
-git branch -d <branch>
-git push origin --delete <branch>
-git fetch --prune
+git branch --merged main          # safe: list candidates first
+git branch -d <branch>            # needs approval
+git push origin --delete <branch> # needs approval; irreversible
+git fetch --prune                 # safe
 ```
 
 ## Also available

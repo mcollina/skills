@@ -7,6 +7,10 @@ metadata:
 
 # Creating pull requests with `gh`
 
+Opening a pull request is a publishing action. Draft the body, show the user
+the exact command and the full text it would post, and wait for explicit
+approval before running it. Drafting is not permission to post.
+
 ## Always use `--body-file`, never `--body`
 
 `--body` mangles newlines. Write the body to a file first:
@@ -35,12 +39,15 @@ Keep it short and in plain prose.
 
 ## After opening
 
-Wait for CI and fix failures proactively rather than handing back a red pull
-request:
+Watching CI is read-only, so do it without asking:
 
 ```bash
 gh pr checks <num> --watch 2>&1
 ```
+
+Investigate any failure and propose the fix. Committing and pushing it is a
+separate mutation needing its own approval — the approval to open the PR does
+not cover the next push.
 
 ## Unfamiliar commands
 
