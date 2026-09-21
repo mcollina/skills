@@ -71,7 +71,7 @@ style. During review, check:
 ### Code quality
 
 - **Primordials**: does code in `lib/internal/` use primordials correctly?
-  See [primordials.md](primordials.md)
+  See `primordials.md` in the **nodejs-source** skill
 - **Error handling**: uses `ERR_*` codes from `lib/internal/errors.js`?
   Correct error types (`TypeError`, `RangeError`, etc.)?
 - **Validators**: uses `require('internal/validators')` for argument
@@ -117,7 +117,7 @@ These patterns identify concrete review risks and unclear technical writing.
   surrounding code's style
 - **Doesn't compile or pass lint**: the contributor never ran the build.
   This is particularly telling because it means the code was never tested
-  locally. See [build-and-test-workflow.md](build-and-test-workflow.md)
+  locally. See `build-and-test-workflow.md` in the **nodejs-build** skill
 
 ### Test red flags
 
@@ -239,5 +239,5 @@ Reviewed-By: Your Name <your@email.com>
 - [Collaborator guide](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/doc/contributing/collaborator-guide.md)
 - Commit message and PR description style:
   [commit-and-pr-guideline.md](commit-and-pr-guideline.md)
-- Build/test workflow: [build-and-test-workflow.md](build-and-test-workflow.md)
-- Primordials: [primordials.md](primordials.md)
+- Build/test workflow: `build-and-test-workflow.md` in the **nodejs-build** skill
+- Primordials: `primordials.md` in the **nodejs-source** skill

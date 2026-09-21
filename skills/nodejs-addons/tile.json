@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/nodejs-addons",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Builds native Node.js addons with N-API and node-addon-api. Use when writing C++ addons, setting up binding.gyp, choosing between N-API and NAN, handling async work with AsyncWorker or napi_async_work, managing external memory and Buffer lifetimes, or fixing ABI compatibility problems across Node versions.",
+  "skills": {
+    "nodejs-addons": {
+      "path": "SKILL.md"
+    }
+  }
+}

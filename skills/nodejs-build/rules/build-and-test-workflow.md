@@ -94,7 +94,7 @@ attempt instead of costing a force-push and another CI cycle.
 Note that on Unix `make test` runs **no** linters — a green test run says
 nothing about CI's lint jobs.
 
-See [pre-commit-lint.md](pre-commit-lint.md) for the full pre-commit gate,
+See `pre-commit-lint.md` in the **nodejs-contributing** skill for the full pre-commit gate,
 including the CI-job-to-command mapping and the checks `make lint` does not
 cover.
 
@@ -107,7 +107,7 @@ make lint
 This runs JavaScript (ESLint), C++ (cpplint), addon docs, Markdown (remark),
 and YAML (yamllint). It does **not** run the Python linter, the shell
 linter, or the C++ formatter, all of which have their own CI jobs — see
-[pre-commit-lint.md](pre-commit-lint.md).
+`pre-commit-lint.md` in the **nodejs-contributing** skill.
 
 ### Targeted Lint Commands
 
@@ -381,7 +381,7 @@ npx core-validate-commit --no-validate-metadata HEAD
 ```
 
 `make test` does not run linters on Unix, so a green test run is not a
-substitute. See [pre-commit-lint.md](pre-commit-lint.md).
+substitute. See `pre-commit-lint.md` in the **nodejs-contributing** skill.
 
 ### Forgetting to format C++ before committing
 

@@ -5,13 +5,6 @@ metadata:
   tags: snipgrapher, snippets, images, svg, png, webp, cli
 ---
 
-## When to use
-
-Use this skill when you need to:
-- Generate image snippets from source code
-- Configure reusable snippet rendering defaults
-- Batch-render snippet assets for docs, social posts, or changelogs
-- Use published `snipgrapher` from npm to generate snippet images
 
 ## Quick start
 

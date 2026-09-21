@@ -5,15 +5,6 @@ metadata:
   tags: linting, neostandard, eslint, eslint9, flat-config, javascript, typescript
 ---
 
-## When to use
-
-Use this skill when you need to:
-- Set up linting in a JavaScript or TypeScript project
-- Use `neostandard` as a Standard-like ESLint v9 flat-config baseline
-- Configure `eslint@9` with the flat config system (`eslint.config.js`/`eslint.config.mjs`)
-- Migrate from `standard` to `neostandard` or ESLint v9
-- Migrate from legacy `.eslintrc*` configuration to ESLint v9
-- Run linting consistently in CI and local development
 
 ## Quick start: basic neostandard setup
 

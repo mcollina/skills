@@ -9,6 +9,8 @@
 	"scripts": {
 		"typecheck": "tsc --noEmit",
 		"lint": "eslint .",
+		"skill:lint": "node tools/skill-lint.mjs",
+		"skill:budget": "node tools/skill-budget.mjs",
 		"test": "node --test"
 	},
 	"devDependencies": {

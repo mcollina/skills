@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/nodejs-build",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Builds, configures, and tests the Node.js runtime from source. Use when running ./configure, compiling nodejs/node with make or ninja, diagnosing gyp or linker failures, setting up a debug or ASan build, cross-compiling, or running the core test suite with tools/test.py.",
+  "skills": {
+    "nodejs-build": {
+      "path": "SKILL.md"
+    }
+  }
+}

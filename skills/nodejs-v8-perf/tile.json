@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/nodejs-v8-perf",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Investigates V8 performance in Node.js. Use when a function deoptimizes, when analysing --trace-opt or --trace-deopt output, when profiling CPU with --prof or flame graphs, when GC pauses or heap growth are the suspected bottleneck, or when reasoning about hidden classes and inline caches.",
+  "skills": {
+    "nodejs-v8-perf": {
+      "path": "SKILL.md"
+    }
+  }
+}

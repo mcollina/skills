@@ -282,4 +282,4 @@ extra work for you and extra CI cycles for the project's shared infra.
   `.github/workflows/commit-lint.yml` in the Node.js repo
 - Lint targets: the `lint` / `lint-ci` section of `Makefile`
 - `doc/contributing/pull-requests.md` — "please be sure to run `make lint`"
-- Full build and test cycle: [build-and-test-workflow.md](build-and-test-workflow.md)
+- Full build and test cycle: `build-and-test-workflow.md` in the **nodejs-build** skill

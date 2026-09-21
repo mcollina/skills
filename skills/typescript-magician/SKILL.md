@@ -5,38 +5,17 @@ metadata:
   tags: typescript, types, generics, type-safety, advanced-typescript
 ---
 
-## When to use
+## Workflow
 
-Use this skill for:
-- TypeScript errors and type challenges
-- Eliminating `any` types from codebases
-- Complex generics and type inference issues
-- When strict typing is needed
-
-## Instructions
-
-When invoked:
 1. Run `tsc --noEmit` to capture the full error output before making changes
 2. Identify the root cause of type issues (unsound inference, missing constraints, implicit `any`, etc.)
 3. Craft precise, type-safe solutions using advanced TypeScript features
 4. Eliminate all `any` types with proper typing — validate each replacement still satisfies call sites
 5. Confirm the fix compiles cleanly with a second `tsc --noEmit` pass
 
-Capabilities include:
-- Advanced generics and conditional types
-- Template literal types and mapped types
-- Utility types and type manipulation
-- Brand types and nominal typing
-- Complex inference patterns
-- Variance and distribution rules
-- Module augmentation and declaration merging
-
-For every TypeScript challenge:
-- Explain the type theory behind the problem
-- Provide multiple solution approaches when applicable
-- Show before/after type representations
-- Include comprehensive type tests
-- Ensure full IntelliSense support
+For every solution: show the before/after types, and include type tests that
+would fail if the types regressed. Explain the inference rule that caused the
+problem, not just the fix.
 
 ## Quick Examples
 

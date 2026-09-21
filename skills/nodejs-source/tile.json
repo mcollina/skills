@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/nodejs-source",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Writes JavaScript and C++ inside the nodejs/node tree. Use when editing lib/ or lib/internal/ modules, applying primordials to avoid prototype pollution, adding a new CLI flag or --experimental option, gating an experimental module, or wiring a new option through src/node_options.cc.",
+  "skills": {
+    "nodejs-source": {
+      "path": "SKILL.md"
+    }
+  }
+}

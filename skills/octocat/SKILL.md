@@ -1,93 +1,61 @@
 ---
 name: octocat
-description: Use this skill whenever the prompt contains any `github.com` URL, even if the user only pastes a link and gives no GitHub-specific keywords. Handles git and GitHub operations using the gh CLI. Triggers include any GitHub link to an issue, pull request, commit, compare page, Actions run, release, discussion, or repository. Covers creating and reviewing PRs, watching CI checks, interactive rebasing, branch cleanup, submodule management, and repository archaeology with git log/blame/bisect.
+description: Performs git and GitHub work through the gh CLI. Use whenever a prompt contains a github.com URL — to an issue, pull request, commit, compare view, Actions run, release, or discussion — even with no other GitHub wording, and for creating or reviewing PRs and issues, interactive rebases, merge conflict resolution, branch cleanup, and Actions workflow debugging.
 metadata:
-  tags: git, github, gh-cli, version-control, merge-conflicts, pull-requests
+  tags: git, github, gh-cli, pull-request, issues, rebase, merge-conflict, actions, branch-management
 ---
 
-## When to use
+## Non-negotiables
 
-Use this skill for:
-- Any prompt containing a pasted `github.com` URL, even without words like "GitHub", "issue", "PR", or "repo"
-- Any GitHub link to an issue, pull request, commit, compare page, Actions run, release, discussion, or repository
-- "Fix https://github.com/owner/repo/issues/123" style tasks
-- Creating, reviewing, and managing pull requests and GitHub issues
-- Merge conflict resolution and history rewriting
-- Pre-commit hook debugging and fixes
-- Branch management and cleanup
-- GitHub Actions workflow optimization
-- Any git command or GitHub workflow question
+1. **Never mutate without explicit permission.** Inspect freely; stop before
+   every write to the remote, to history, or to the working tree. Show the
+   exact command and any text it would publish, then wait.
+   - **Approval for one command is not standing approval for the next**, and
+     approval to draft is not approval to post — the user must have read the
+     text, not merely agreed to the action.
+   - Classify by effect, not by how the command reads: `git checkout`,
+     `switch`, and `stash` can discard uncommitted work; `git pull` merges
+     where `fetch` does not; `gh api` writes as soon as it carries
+     `-X POST`/`PATCH`/`DELETE`; `gh run rerun` and `gh workflow run` spend CI
+     and fire side effects.
+   - Where a repository's own `AGENTS.md` is stricter, it wins.
 
-## Instructions
+2. **Never change git signing configuration.** Do not touch `user.signingkey`
+   or signing mode in user or repo config. If signing is already enabled and
+   working, use it. If it is not, proceed without it — do not enable it.
+3. **Never add AI attribution.** No `Co-Authored-By: Claude` or any equivalent
+   co-authorship or sign-off trailer naming a tool.
+4. **Use `gh`, never the web interface.** Do not tell the user to click through
+   github.com for something `gh` can do.
+5. **A bare github.com URL is a sufficient trigger.** Treat the URL alone as
+   the instruction, and resolve it with the read-only commands above before
+   asking clarifying questions.
 
-When invoked:
-1. If the prompt includes a GitHub URL, treat that URL alone as sufficient reason to invoke this skill and inspect it with `gh`/`git` first
-2. Assess the git/GitHub situation immediately
-3. If the prompt includes a `github.com` URL, activate this skill immediately and translate that URL into the relevant `gh`/`git` workflow
-4. Use gh CLI for all GitHub operations (never suggest the web interface)
-5. Handle complex git operations with surgical precision
-6. Fix pre-commit hook issues or delegate to typescript-magician for TypeScript linting
-7. Never alter git signing key configuration; if signing is already enabled and configured, use it. Otherwise, proceed without signing
-8. NEVER include "Co-Authored-By: Claude" or similar AI attribution
+## First move
 
-## Activation examples
-
-- `Fix https://github.com/mercurius-js/mercurius/issues/1227`
-- `Review https://github.com/nodejs/node/pull/12345`
-- `What changed in https://github.com/org/repo/compare/v1.0.0...v1.1.0?`
-- `Check https://github.com/org/repo/actions/runs/123456789`
-- `Investigate https://github.com/org/repo/commit/abcdef1234567890`
-
-## Capabilities
-
-**Advanced git operations:**
-- Interactive rebasing for clean history (commit splitting, squashing)
-- Cherry-pick, bisect, worktrees
-- Advanced merge strategies
-- Submodule and subtree management
-- Git hooks setup and maintenance
-- Repository archaeology with git log/blame/show
-
-**GitHub operations via gh CLI:**
-- Create/manage PRs with proper templates
-- Open PRs with explicit base/head and clear concise content, e.g. `gh pr create --base main --head <branch> --title "<title>" --body-file <file>`
-- After opening a PR, wait for CI with `gh pr checks <num> --watch 2>&1` and proactively fix failures
-- Validate unfamiliar gh commands first with `gh help <command>` before using them in guidance
-- Handle issues and project boards
-- Manage releases and artifacts
-- Configure repository settings
-- Automate workflows and notifications
-
-## PR Body Formatting
-
-When creating PRs with `gh pr create`, use `--body-file` to avoid newline escaping issues with the `--body` flag.
-
-PR descriptions should stay simple:
-- Write a short description of the change in plain prose
-- Do not add subsections or headings such as `## Summary` or `## Testing`
-- Do not include a testing section
-- Architecture changes may need a slightly longer description if extra context is necessary
+Translate the URL or request into a `gh`/`git` inspection before proposing
+anything:
 
 ```bash
-cat > /tmp/pr-body.md << 'EOF'
-Refactor plugin loading so skills are discovered from the registry instead of being hardcoded.
-EOF
-gh pr create --body-file /tmp/pr-body.md
+gh issue view <url> --comments
+gh pr view <url> --comments
+gh pr diff <url>
+gh run view <run-id> --log-failed
+gh api repos/<owner>/<repo>/compare/<base>...<head>
 ```
 
-Using a temporary file is cleaner, more reliable, and easier to debug.
+Assess the actual repository state first. Most wrong answers here come from
+acting on the prompt's description of the situation instead of the repository.
 
-## Validation Checkpoints for Complex Operations
+## Rules
 
-**Interactive rebase:** `git rebase -i <base>` → verify with `git log --oneline -n 10` → on conflict: resolve, `git add <file>`, `git rebase --continue` → abort anytime with `git rebase --abort`.
+- [rules/pr-creation.md](rules/pr-creation.md) — `gh pr create` with `--body-file`, description style, waiting on CI
+- [rules/git-operations.md](rules/git-operations.md) — rebase, merge conflict, and branch cleanup sequences with verification steps
 
-**Merge conflict resolution:** `git status` (find conflicts) → inspect with `git diff` or open file → resolve all markers → `git add <resolved-file>` → `git merge --continue` (or `git rebase --continue`) → confirm clean state with `git status`.
+## Related skills
 
-**Branch cleanup:** `git branch --merged main` → `git branch -d <branch>` → `git push origin --delete <branch>` → `git fetch --prune`.
+Cross-skill references are by skill name, not file path, because each skill
+installs independently.
 
-## Commit Signing and Attribution Rules
-
-- NEVER alter git signing key settings (`user.signingkey`) or signing mode in user/repo config
-- If commit signing is already enabled and correctly configured, create signed commits using the existing setup
-- If signing is not enabled/configured, do not force or configure signing; proceed without it
-- NEVER add AI co-authorship attributions (e.g. "Co-Authored-By: Claude")
+- Commit messages and PR descriptions for **nodejs/node**, which has its own strict rules → **nodejs-contributing**
+- Pre-commit hook failures caused by TypeScript or lint errors → **typescript-magician**, **linting-neostandard-eslint9**

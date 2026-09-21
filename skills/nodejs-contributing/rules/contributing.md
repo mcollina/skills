@@ -23,7 +23,7 @@ git remote add upstream https://github.com/nodejs/node.git
 ```
 
 For building, linting, and testing, see
-[build-and-test-workflow.md](build-and-test-workflow.md).
+`build-and-test-workflow.md` in the **nodejs-build** skill.
 
 ### Understanding the Repository Structure
 
@@ -112,18 +112,9 @@ identity. Put full-URL `Fixes:` and `Refs:` lines in the pull request body so
 the landing process can add them to the landed commit. Never write a `PR-URL:`
 or `Reviewed-By:` trailer yourself — landing adds those.
 
-Validate each commit before pushing, using the same invocation as CI:
-
-```bash
-npx core-validate-commit --no-validate-metadata HEAD
-
-# Or the whole branch:
-git rev-list upstream/main..HEAD | xargs npx core-validate-commit --no-validate-metadata
-```
-
-`--no-validate-metadata` is required for unlanded commits: metadata validation
-is on by default and fails on the missing `PR-URL:` and `Reviewed-By:`
-trailers, which is expected and must not be "fixed" by adding them.
+Validate before pushing with `bash scripts/precommit-gate.sh`;
+[pre-commit-lint.md](pre-commit-lint.md) documents the invocations and why
+`--no-validate-metadata` is mandatory.
 
 ### Code Style
 
@@ -132,7 +123,7 @@ non-draft pull request, and `make test` does not lint on Unix. For the full
 pre-commit gate, including the C++ formatter and the CI jobs `make lint` does
 not cover, see [pre-commit-lint.md](pre-commit-lint.md). For the rest of the
 lint and formatting commands, see
-[build-and-test-workflow.md](build-and-test-workflow.md#lint).
+`build-and-test-workflow.md` in the **nodejs-build** skill.
 
 ### Writing Tests
 
@@ -164,7 +155,7 @@ const fs = require('fs');
 ### Running Tests
 
 For build, test, and workflow commands, see
-[build-and-test-workflow.md](build-and-test-workflow.md#test).
+`build-and-test-workflow.md` in the **nodejs-build** skill.
 
 ```bash
 # Run benchmarks
@@ -291,24 +282,12 @@ for the current landing workflow.
 
 ### Style Guide
 
-```cpp
-// Use 2-space indentation
-// Use snake_case for variables and functions
-// Use PascalCase for classes
-// Use SCREAMING_CASE for macros
+Node.js follows the Google C++ style guide, which `make format-cpp` enforces —
+run the formatter rather than hand-applying it. The points it does not catch:
 
-class MyClass : public BaseClass {
- public:  // 1 space before public/private
-  void DoSomething();
-
- private:
-  int my_variable_;  // Trailing underscore for members
-};
-
-// Wrap at 80 characters
-// Use nullptr, not NULL
-// Prefer std::unique_ptr over raw pointers
-```
+- Members carry a trailing underscore (`int my_variable_;`).
+- Wrap at 80 columns.
+- `deps/` is excluded from formatting; do not reformat vendored code.
 
 ### Error Handling
 
@@ -331,28 +310,13 @@ CHECK_GE(length, 0);
 
 ### Style
 
-```javascript
-'use strict';  // Always include
+`make lint` enforces the style; run it rather than working from memory. The two
+rules that are specific to this codebase rather than ordinary modern
+JavaScript:
 
-// Use const/let, never var
-const x = 1;
-let y = 2;
-
-// Use arrow functions for callbacks
-array.map((item) => item.value);
-
-// Destructuring
-const { a, b } = obj;
-
-// Template literals
-const message = `Value is ${value}`;
-
-// Use primordials for built-ins in internal code (see primordials.md)
-const {
-  ArrayPrototypeMap,
-  ObjectDefineProperty,
-} = primordials;
-```
+- Every file starts with `'use strict';`, including ESM-era additions to `lib/`.
+- Code in `lib/internal/` must use primordials instead of global built-ins.
+  See `primordials.md` in the **nodejs-source** skill.
 
 ### Internal Modules
 

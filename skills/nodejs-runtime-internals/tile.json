@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/nodejs-runtime-internals",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Explains how Node.js subsystems are implemented internally. Use when reasoning about libuv event loop phases, thread pool saturation or UV_THREADPOOL_SIZE, blocked or starved I/O, or how streams, net, fs, crypto, child_process, or worker_threads are actually implemented beneath the JavaScript API.",
+  "skills": {
+    "nodejs-runtime-internals": {
+      "path": "SKILL.md"
+    }
+  }
+}
