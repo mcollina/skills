@@ -79,7 +79,8 @@ test('estimateTokens is monotonic and non-zero for non-empty input', () => {
   assert.ok(estimateTokens('a'.repeat(1000)) > estimateTokens('a'.repeat(100)));
 });
 
-test('budgets are ordered resident < activation < rule', () => {
+test('resident budget is tighter than activation budget', () => {
   assert.ok(BUDGETS.resident < BUDGETS.activation);
-  assert.ok(BUDGETS.activation < BUDGETS.rule);
+  // Rule files are intentionally unbudgeted; see the note in skill-budget.mjs.
+  assert.equal(BUDGETS.rule, undefined);
 });

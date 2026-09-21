@@ -325,7 +325,9 @@ Refs: https://github.com/nodejs/node/issues/12345
 
 ### Create the PR with `gh`
 
-Write the body to a file so Markdown and newlines are preserved:
+Note `--repo nodejs/node` and the `USER:BRANCH` head form, which are what a
+fork-based contribution needs. General `gh pr create` usage is covered by the
+**octocat** skill.
 
 ```bash
 cat > /tmp/pr-body.md <<'EOF'
@@ -346,55 +348,18 @@ gh pr create \
 
 ## Validate before you push
 
-**Validate each commit message with `core-validate-commit`.** It is the same
-tool the project runs in CI, so a local run is what makes the commit-lint job
-pass on the first attempt. Do not run it against unrelated repositories,
-including the skills repository containing this document — its subsystem rule
-is specific to `nodejs/node`.
+Run the gate, which validates the message and the linters together:
 
 ```bash
-# Inspect the complete message.
-git log -1 --format=%B
-
-# Validate the commit you just authored.
-npx core-validate-commit --no-validate-metadata HEAD
-
-# Validate every commit on the branch.
-git rev-list upstream/main..HEAD | xargs npx core-validate-commit --no-validate-metadata
-```
-
-**Always use `--no-validate-metadata` on authored commits.** Metadata
-validation is on by default (`-V, --validate-metadata`) and enforces the
-`PR-URL:` and `Reviewed-By:` trailers that exist only after landing. Without
-the flag, a perfectly good local commit fails the `pr-url` and `reviewers`
-rules. That output is expected — **do not "fix" it by adding a `PR-URL:`
-trailer.** Node.js CI uses the same flag:
-
-```bash
-# From .github/workflows/commit-lint.yml
-npx -q core-validate-commit --no-validate-metadata --tap <sha>
-```
-
-CI validates only the first commit of a pull request; the branch-wide command
-above covers the rest.
-
-Validate *with* metadata only when inspecting a commit that has already landed
-on `main`:
-
-```bash
-npx core-validate-commit HEAD   # landed commits only
+bash scripts/precommit-gate.sh
 ```
 
 Fix any failure with `git commit --amend` (or an interactive rebase for older
-commits) while the branch is still local. If the human sign-off is missing,
-amend with the contributor's configured identity:
+commits) while the branch is still local.
 
-```bash
-git commit --amend --signoff
-```
-
-Linting is a separate gate that must also pass before you commit — see
-[pre-commit-lint.md](pre-commit-lint.md).
+[pre-commit-lint.md](pre-commit-lint.md) owns this procedure: the exact
+`core-validate-commit` invocations, why `--no-validate-metadata` is mandatory,
+the CI-job-to-command mapping, and the lint targets `make lint` does not cover.
 
 ## Upstream sources
 

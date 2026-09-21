@@ -38,8 +38,16 @@ const SKILLS_DIR = join(ROOT, 'skills');
 export const BUDGETS = {
   resident: 200, // frontmatter, per skill
   activation: 1000, // SKILL.md body, per skill
-  rule: 4000, // any single rules/*.md
 };
+
+// Rule files are reported but deliberately not budgeted. Size does not
+// distinguish a dense, project-specific reference from a restatement of
+// training data: the largest rule file in this repo is almost entirely
+// non-guessable detail, while generic "use const, not var" style tutorials
+// lived in a file comfortably under any threshold. A size check would have
+// flagged the good file and passed the bad one, so it is worse than nothing.
+// The largest files are listed instead, for a human to look at.
+export const RULES_TO_REPORT = 5;
 
 // Rough BPE approximation. Real tokenizers vary by model and we deliberately
 // avoid a dependency here, so this is calibrated against English prose with
@@ -152,17 +160,6 @@ export function findViolations(skills) {
         hint: 'SKILL.md covers more than one task; split it or move detail into rules/',
       });
     }
-    for (const rule of skill.rules.files) {
-      if (rule.tokens > BUDGETS.rule) {
-        violations.push({
-          skill: skill.name,
-          tier: `rule:${rule.path}`,
-          actual: rule.tokens,
-          budget: BUDGETS.rule,
-          hint: 'long reference file; check it is a delta against model priors, not a tutorial',
-        });
-      }
-    }
   }
   return violations;
 }
@@ -196,8 +193,7 @@ function report(skills, { showRules }) {
     );
     if (showRules) {
       for (const rule of skill.rules.files) {
-        const flag = rule.tokens > BUDGETS.rule ? ' !' : '';
-        console.log(`${' '.repeat(nameWidth + 2)}  ${pad(rule.tokens, 9, 'right')}  rules/${rule.path}${flag}`);
+        console.log(`${' '.repeat(nameWidth + 2)}  ${pad(rule.tokens, 9, 'right')}  rules/${rule.path}`);
       }
     }
   }
@@ -210,6 +206,17 @@ function report(skills, { showRules }) {
   console.log(`resident cost per request:      ~${totals.resident} tokens (${skills.length} skills)`);
   console.log(`worst-case if every skill fires: ~${totals.resident + totals.activation} tokens`);
   console.log(`total corpus:                    ~${totals.resident + totals.activation + totals.rules} tokens`);
+
+  const largest = skills
+    .flatMap((s) => s.rules.files.map((f) => ({ ...f, skill: s.skill ?? s.name })))
+    .sort((a, b) => b.tokens - a.tokens)
+    .slice(0, RULES_TO_REPORT);
+  if (largest.length > 0) {
+    console.log();
+    console.log(`Largest rule files (informational — read them, do not just shrink them):`);
+    for (const r of largest) console.log(`  ${String(r.tokens).padStart(6)}  ${r.skill}/rules/${r.path}`);
+  }
+
   console.log();
   console.log('Token counts are estimates (~3.8 chars/token), useful for comparison not billing.');
 }

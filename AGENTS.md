@@ -70,6 +70,12 @@ tier a piece of text lands in matters more than its length.
 | activation | `SKILL.md` body | whenever the skill fires, **including by mistake** |
 | on-demand | `rules/*.md` | only when a rule is actually read |
 
+Rule files are reported by `skill:budget` but not budgeted. Size does not
+distinguish dense, project-specific reference from a restatement of training
+data — the largest rule file in this repo is almost entirely non-guessable
+detail, while generic style tutorials sat in a much smaller one. Read the
+largest files; do not just shrink them.
+
 Activation is the expensive tier: it is loaded early in a session and rarely
 evicted, so it is multiplied by nearly every subsequent turn. Corpus size is
 mostly noise by comparison — a large skill with a small router is cheaper in
