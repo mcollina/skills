@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/nodejs-contributing",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Writes and reviews nodejs/node commits and pull requests. Use when drafting a commit message for Node.js core, writing a PR description, validating a commit with core-validate-commit, running the pre-commit lint gate, or reviewing someone else's nodejs/node pull request.",
+  "skills": {
+    "nodejs-contributing": {
+      "path": "SKILL.md"
+    }
+  }
+}

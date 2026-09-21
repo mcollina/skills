@@ -6,6 +6,44 @@ Add new entries at the top using the template from [`docs/skill-benchmarking.md`
 
 ---
 
+## PENDING — `nodejs-core` split into eight task-scoped skills
+
+`nodejs-core` was replaced by `nodejs-contributing`, `nodejs-build`,
+`nodejs-source`, `nodejs-addons`, `nodejs-native-debug`, `nodejs-v8-perf`,
+`nodejs-runtime-internals`, and `nodejs-api-docs`. No rule content was rewritten;
+the 28 `rules/*.md` files moved unchanged.
+
+**This invalidates the Scenario B baseline below** — that scenario measured the
+`nodejs-core` router, which no longer exists. The equivalent scenario now
+targets `nodejs-contributing`.
+
+Per the release gate in [`docs/skill-benchmarking.md`](./skill-benchmarking.md),
+this change is **not ready to ship** until re-run across haiku/sonnet/opus. The
+two risks specific to a split are:
+
+1. **Activation regression.** One large router matched a wide range of prompts.
+   Eight narrow ones can each fail to fire, so a task that previously got
+   guidance now gets none. Scenario B is the direct check: does
+   `nodejs-contributing` fire on a bare "write a commit message for this fix"?
+2. **Lost invariants at the seams.** The `-s` sign-off, the
+   `--no-validate-metadata` flag, the never-write-`PR-URL` rule, and the
+   rebuild-after-`lib/`-change rule were promoted into `nodejs-core/SKILL.md` by
+   #38 and #39 *in response to observed failures*. They now live in
+   `nodejs-contributing` and `nodejs-build`. Re-run the scenarios that motivated
+   those commits before trusting the split.
+
+Context cost, for reference (estimated tokens):
+
+| | resident | activation on the commit-message path |
+| --- | --- | --- |
+| before (`nodejs-core`) | 155 | 2861 |
+| after (`nodejs-contributing`) | 119 | 858 |
+
+Resident cost across all eight is 965, up 810 from the single skill; activation
+on a given task path falls by 70–89%.
+
+---
+
 ## 2026-03-12 — targeted activation/regression spot-checks
 
 Method: lightweight cross-model checks using `subagent` with `anthropic/claude-haiku-4-5`, `anthropic/claude-sonnet-4-6`, and `anthropic/claude-opus-4-6`.

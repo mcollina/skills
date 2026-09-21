@@ -23,7 +23,7 @@ git remote add upstream https://github.com/nodejs/node.git
 ```
 
 For building, linting, and testing, see
-[build-and-test-workflow.md](build-and-test-workflow.md).
+`build-and-test-workflow.md` in the **nodejs-build** skill.
 
 ### Understanding the Repository Structure
 
@@ -132,7 +132,7 @@ non-draft pull request, and `make test` does not lint on Unix. For the full
 pre-commit gate, including the C++ formatter and the CI jobs `make lint` does
 not cover, see [pre-commit-lint.md](pre-commit-lint.md). For the rest of the
 lint and formatting commands, see
-[build-and-test-workflow.md](build-and-test-workflow.md#lint).
+`build-and-test-workflow.md` in the **nodejs-build** skill.
 
 ### Writing Tests
 
@@ -164,7 +164,7 @@ const fs = require('fs');
 ### Running Tests
 
 For build, test, and workflow commands, see
-[build-and-test-workflow.md](build-and-test-workflow.md#test).
+`build-and-test-workflow.md` in the **nodejs-build** skill.
 
 ```bash
 # Run benchmarks

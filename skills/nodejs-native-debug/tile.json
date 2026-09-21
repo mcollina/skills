@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/nodejs-native-debug",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Diagnoses native crashes and memory leaks in Node.js. Use when a Node process segfaults or aborts, when debugging a C++ addon or core binary under gdb or lldb, when reading a native backtrace, or when hunting a memory leak with heap snapshots, valgrind, or ASan.",
+  "skills": {
+    "nodejs-native-debug": {
+      "path": "SKILL.md"
+    }
+  }
+}
