@@ -24,16 +24,23 @@ metadata:
 
 Read individual rule files for detailed procedures and templates:
 
-- [rules/benchmark-loop.md](rules/benchmark-loop.md) - End-to-end benchmark loop and scoring
+- [rules/context-budget.md](rules/context-budget.md) - The three-tier cost model; what belongs in each tier and when to split a skill
 - [rules/activation-design.md](rules/activation-design.md) - Improve retrieval and instruction uptake
-- [rules/context-budget.md](rules/context-budget.md) - Reduce token cost without losing behavior
+- [rules/benchmark-loop.md](rules/benchmark-loop.md) - End-to-end benchmark loop and scoring
+- [rules/measuring-skills.md](rules/measuring-skills.md) - Budget and lint tooling, and the properties that resist measurement
 - [rules/regression-triage.md](rules/regression-triage.md) - Diagnose and fix skill-on regressions
 - [rules/release-gates.md](rules/release-gates.md) - Go/no-go criteria before shipping skill updates
 
 ## Practical heuristics
 
+- **Triggers go in the `description`; non-negotiables go in the body.** The
+  description routes, so a "When to use" list in the body is paid on every
+  activation after the decision it describes has already been made.
+- **A skill is the smallest unit one task needs in full.** An activation cost
+  over ~1000 tokens means it covers more than one task.
+- **Duplicate invariants freely; never duplicate reference.** One owner per
+  procedure, linked by skill name.
+- **Write the delta, not the tutorial** — what the model cannot already produce
 - Prefer **few high-signal rules** over many soft recommendations
-- Put fragile, high-value behaviors in **top-level checklists**
 - Include at least one **integrated example** per common scenario
-- Add explicit wording for what must **not** be omitted
 - Track gains/losses with **with-skill vs without-skill** comparisons

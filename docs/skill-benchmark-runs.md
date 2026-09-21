@@ -24,7 +24,15 @@ carried the same routing signals.
 | `init` | 762 | 688 | routing block removed |
 | `linting-neostandard-eslint9` | 556 | 440 | routing block removed |
 | `snipgrapher` | 555 | 483 | routing block removed |
-| `skill-optimizer` | 463 | 378 | routing block removed |
+| `skill-optimizer` | 463 | 533 | routing block removed, then doctrine added (below) |
+
+`skill-optimizer` additionally gained the three-tier cost model
+(`context-budget.md`), a new `measuring-skills.md`, and structural release
+gates. Its `activation-design.md` was **reversed** on one point: it previously
+told authors to list task signals near the top of the skill body, and now
+assigns triggers to the `description` and non-negotiables to the body. That
+reversal is the justification for the removals in the table above, so the two
+stand or fall together.
 
 **Re-benchmark before shipping.** Two specific risks:
 
@@ -39,7 +47,8 @@ carried the same routing signals.
    that routing happens on the frontmatter description, so the body list is
    paid after the decision is made — but that depends on how the harness
    retrieves skills. If activation drops for any skill in the table above,
-   this is the change to revert first.
+   this is the change to revert first, together with the `activation-design.md`
+   reversal that licenses it.
 
 Two pre-existing defects were fixed in passing: `oauth/SKILL.md` referenced four
 files (`DEVICE_FLOW.md`, `TOKEN_VALIDATION.md`, `CLIENT_CREDENTIALS.md`,
