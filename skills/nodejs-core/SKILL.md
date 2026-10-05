@@ -51,6 +51,19 @@ Read individual rule files for detailed explanations and code examples:
 ### JavaScript Internals
 
 - [rules/primordials.md](rules/primordials.md) - **Using primordials to prevent prototype pollution (required for `lib/internal/`)**
+- [rules/internal-errors.md](rules/internal-errors.md) - **`ERR_*` codes, `internal/validators`, and why a `CHECK` must never be user-reachable**
+
+### Testing
+
+- [rules/writing-tests.md](rules/writing-tests.md) - **`test/common` helpers, strict assertions, avoiding flakiness, keeping the suite fast**
+
+### API Design
+
+- [rules/semver-and-stability.md](rules/semver-and-stability.md) - **Is this semver-major? Stability index, deprecation, web-standard APIs, backporting**
+
+### Performance
+
+- [rules/benchmarks.md](rules/benchmarks.md) - `benchmark/compare.js`, reading the statistics, and the evidence bar for performance claims
 
 ### Build & Contributing
 
@@ -86,6 +99,30 @@ contributor's DCO sign-off, and never add `PR-URL:` or `Reviewed-By:` — those
 are added when the change lands. Validate the result with
 `npx core-validate-commit --no-validate-metadata <sha>` in the `nodejs/node`
 checkout.
+
+### Writing or changing a test
+
+Any change that adds or edits a file under `test/` must follow
+[rules/writing-tests.md](rules/writing-tests.md). The recurring review
+findings it prevents: `setTimeout` used as synchronization, assertions on error
+messages instead of `code`s, `mustCall` + `assert.ifError` where
+`common.mustSucceed` belongs, hand-rolled temp directories instead of
+`require('../common/tmpdir')`, and tests that inflate suite runtime for
+everyone. `common.tmpDir` does not exist.
+
+### Before claiming a performance win
+
+Numbers from `benchmark/compare.js --analyze` go in the PR description, or the
+claim does not survive review — including the configurations that did not
+improve. See [rules/benchmarks.md](rules/benchmarks.md).
+
+### Before choosing a semver label
+
+Run the detectors in
+[rules/semver-and-stability.md](rules/semver-and-stability.md): property shape
+(own data property vs. prototype accessor), microtask timing, tightened
+validation, and error identity. Backward-incompatible changes need approval
+from two TSC voting members, so mislabeling costs a release cycle.
 
 ### MANDATORY: Rebuild before testing
 

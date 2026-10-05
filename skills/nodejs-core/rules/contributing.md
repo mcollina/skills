@@ -136,39 +136,62 @@ lint and formatting commands, see
 
 ### Writing Tests
 
+See **[writing-tests.md](writing-tests.md)** for the full rules: the
+`test/common` helper map, directory placement, assertion style, and how to keep
+a test off the flaky list.
+
 ```javascript
-// test/parallel/test-fs-read.js
+// test/parallel/test-fs-readfile-utf8.js
 'use strict';
+
 const common = require('../common');
-const assert = require('assert');
-const fs = require('fs');
+const tmpdir = require('../common/tmpdir');
 
-// Test description
-{
-  const expected = 'test content';
-  const file = common.tmpDir + '/test-file.txt';
+// This test ensures fs.readFile() returns the contents written by
+// fs.writeFileSync() when a utf8 encoding is requested.
 
-  fs.writeFileSync(file, expected);
+const assert = require('node:assert');
+const fs = require('node:fs');
+const path = require('node:path');
 
-  fs.readFile(file, 'utf8', common.mustCall((err, data) => {
-    assert.ifError(err);
-    assert.strictEqual(data, expected);
-  }));
-}
+tmpdir.refresh();
 
-// Use common.mustCall() to ensure callbacks are called
-// Use common.mustNotCall() to ensure callbacks are not called
-// Use assert.throws() for expected errors
+const file = path.join(tmpdir.path, 'test-file.txt');
+const expected = 'test content';
+
+fs.writeFileSync(file, expected);
+
+fs.readFile(file, 'utf8', common.mustSucceed((data) => {
+  assert.strictEqual(data, expected);
+}));
 ```
+
+The essentials:
+
+- `require('../common')` first, then the comment saying what the test ensures.
+- `common.mustSucceed()` wraps a callback and asserts its error argument is
+  falsy — prefer it to `mustCall()` plus `assert.ifError()`.
+- `common.mustCall()` / `common.mustNotCall()` for every other callback.
+- Temporary files go under `require('../common/tmpdir')` after
+  `tmpdir.refresh()`. There is no `common.tmpDir`.
+- Strict assertions only, and assert error `code`s rather than messages.
+- Never use `setTimeout` as a synchronization primitive.
 
 ### Running Tests
 
 For build, test, and workflow commands, see
 [build-and-test-workflow.md](build-and-test-workflow.md#test).
 
+For benchmarks and the evidence bar for performance claims, see
+[benchmarks.md](benchmarks.md).
+
 ```bash
-# Run benchmarks
+# Run a single benchmark directly
 node benchmark/fs/readfile.js
+
+# Compare two builds with statistics
+node benchmark/compare.js --old ./node-main --new ./node-branch \
+  --runs 30 --analyze fs
 ```
 
 ## Pull Request Process
@@ -321,11 +344,20 @@ if (result.IsEmpty()) {
 }
 v8::Local<v8::Value> value = result.ToLocalChecked();
 
-// Use CHECK macros for invariants
+// Use CHECK macros for INTERNAL INVARIANTS ONLY — they abort the process
 CHECK_NOT_NULL(env);
 CHECK_EQ(status, 0);
 CHECK_GE(length, 0);
+
+// Anything a user can influence must throw, not abort:
+if (!args[0]->IsUint8Array()) {
+  return THROW_ERR_INVALID_ARG_TYPE(env, "buffer must be a Uint8Array");
+}
 ```
+
+**A `CHECK` reachable from user input is a crash, not a validation.** This is
+one of the most consistent findings in TSC review of `src/`. See
+[internal-errors.md](internal-errors.md).
 
 ## JavaScript Contribution Guidelines
 
@@ -367,7 +399,8 @@ const {
 // Internal binding
 const { myBinding } = internalBinding('my_binding');
 
-// Validators
+// Validators — see internal-errors.md for the full set and the rules about
+// validating at the JS boundary in documented argument order.
 const {
   validateString,
   validateNumber,
@@ -408,6 +441,9 @@ git commit --amend
 
 ## Resources
 
+- [Writing tests](https://github.com/nodejs/node/blob/HEAD/doc/contributing/writing-tests.md)
+- [Using internal errors](https://github.com/nodejs/node/blob/HEAD/doc/contributing/using-internal-errors.md)
+- [Writing and running benchmarks](https://github.com/nodejs/node/blob/HEAD/doc/contributing/writing-and-running-benchmarks.md)
 - [Contributing guide](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/CONTRIBUTING.md)
 - [Collaborator guide](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/doc/contributing/collaborator-guide.md)
 - [C++ style guide](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/doc/contributing/cpp-style-guide.md)
