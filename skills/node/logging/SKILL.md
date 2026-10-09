@@ -1,8 +1,8 @@
 ---
-name: logging
-description: Logging and debugging patterns
+name: node-logging
+description: Node.js logging and debugging with pino for structured JSON logging, child loggers with bound context, log transports (pino-pretty, pino-elasticsearch, pino-loki), Fastify built-in pino integration, redaction of sensitive fields, debug module for library tracing, and util.debuglog for core module diagnostics. Use when implementing application logging, structured observability, log-level management, or debugging Node.js internals.
 metadata:
-  tags: logging, debugging, observability, pino
+  tags: node, nodejs, logging, pino, structured-logging, transports, child-loggers, redaction, debug, observability
 ---
 
 # Logging in Node.js

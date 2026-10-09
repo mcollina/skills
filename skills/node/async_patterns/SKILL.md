@@ -1,8 +1,8 @@
 ---
-name: async-patterns
-description: Async/await and Promise patterns
+name: node-async-patterns
+description: Node.js async/await patterns, Promise handling, concurrency control, and parallel execution. Use when writing asynchronous JavaScript or TypeScript in Node.js, managing concurrent operations with p-limit or p-map, using Promise.all or Promise.allSettled, handling AbortController cancellation, avoiding async constructors, or structuring async code. Covers async factory functions, controlled concurrency limits, fault-tolerant promise aggregation, and timeout patterns for Node.js applications.
 metadata:
-  tags: async, await, promises, concurrency
+  tags: node, nodejs, async, await, promises, concurrency, parallel, p-limit, p-map, abort-controller, factory-pattern
 ---
 
 # Async Patterns in Node.js

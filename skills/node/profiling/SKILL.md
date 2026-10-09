@@ -1,8 +1,8 @@
 ---
-name: profiling
-description: Profiling and benchmarking tools
+name: node-profiling
+description: Node.js profiling and benchmarking tools including CPU profiling with @platformatic/flame for flame graphs, HTTP benchmarking with autocannon and wrk, complex load testing with k6, built-in V8 profiling with --prof and --inspect, heap snapshots via Chrome DevTools, diagnostic reports with --report-on-signal, and structured profiling workflows. Use when identifying performance bottlenecks, generating flame graphs, benchmarking HTTP endpoints, or analyzing memory usage in Node.js applications.
 metadata:
-  tags: profiling, benchmarking, performance, flame-graphs
+  tags: node, nodejs, profiling, benchmarking, flame-graphs, cpu-prof, autocannon, wrk, k6, heap-snapshot, load-testing
 ---
 
 # Profiling in Node.js
