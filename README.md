@@ -18,6 +18,27 @@ Skills for AI-assisted development.
 | `snipgrapher` | Configure and use snipgrapher to generate polished code snippet images |
 | `typescript-magician` | TypeScript wizard specializing in advanced type systems, complex generics, and eliminating any types |
 
+## Installation
+
+Install any of the skills above to your AI agent host (Claude Code, Cursor, Windsurf, and [15 more](https://github.com/pea3nut/agent-get)) with a single command via [agent-add](https://github.com/pea3nut/agent-get):
+
+```bash
+# Install a specific skill (replace <skill-name> with e.g. fastify, node, oauth)
+npx -y agent-add --skill 'https://github.com/mcollina/skills#skills/<skill-name>'
+```
+
+Example — install the `fastify` skill:
+
+```bash
+npx -y agent-add --skill 'https://github.com/mcollina/skills#skills/fastify'
+```
+
+`agent-add` auto-detects your AI host and copies the skill directory to the correct location.
+
+### Manual installation
+
+If you prefer manual installation, copy any `skills/<skill-name>/` directory from this repository into your AI tool's skills directory.
+
 ## Usage
 
 This package contains best practices and skills for AI-assisted development.
