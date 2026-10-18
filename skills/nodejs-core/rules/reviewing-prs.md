@@ -232,6 +232,80 @@ Reviewed-By: Your Name <your@email.com>
 | `author ready`      | Author considers PR ready for review                 |
 | `dont-land-on-*`    | Do not land on specific release lines                |
 
+## What TSC reviewers actually flag
+
+Patterns aggregated from ~8,400 inline review comments left by TSC members on
+1,743 `nodejs/node` pull requests. Use them as a review pass and as a
+self-review before opening a PR.
+
+### Before reading the code: the "why" gate
+
+`Why this change?` and `What's the purpose of this change?` recur as standalone
+review comments. A PR whose description does not carry the motivation gets
+bounced before anyone evaluates the diff. Check that the description answers:
+what behavior changes, why it should change, and how it was verified.
+
+### C++ (`src/`)
+
+- **`CHECK` on a user-reachable value.** Aborts the process where a catchable
+  error was required. See [internal-errors.md](internal-errors.md).
+- **Ownership on the error path.** A deleter that runs whether or not the
+  object it belongs to was constructed — e.g. a backing-store adopter that
+  frees the pointer on the early-return branch as well — is a double free.
+  Trace every `return` between allocation and transfer of ownership.
+- **Touching `Environment` off-thread.** Code running on the libuv thread pool
+  must not read `env->…`. It happens to work until it does not; pass the value
+  in from the caller instead.
+- **`std::string` / `c_str()` against binary input.** `c_str()` truncates at an
+  embedded NUL, silently. Anywhere a passphrase, key, or user buffer reaches a
+  C API that takes no length, ask what happens to `"secret\0junk"`.
+- **Synchronization mismatch.** A reader guarded by one mutex and the writer by
+  another is not synchronized. Check that both sides name the same lock.
+- **Duplicate implementations.** A second parser/decoder for a format the tree
+  already handles gets sent back to share the existing one.
+- **`UV_ECANCELED` on teardown.** Thread-pool callbacks receive it when the
+  environment is being destroyed; the convention is to return early, not to
+  build a rejection.
+
+### JavaScript (`lib/`)
+
+- **Observable lookups.** Reading `.then` on a user-supplied object is a
+  visible side effect. So is any property access on a user object in what is
+  meant to be a type check.
+- **Missing primordials** in `lib/internal/`. See
+  [primordials.md](primordials.md).
+- **Comments that restate the code.** Reviewers ask for the *why* — the
+  deprecation, spec clause, or bug that forced the shape — not a paraphrase of
+  the next line.
+- **Unjustified micro-optimization** on a non-hot path, especially when it
+  costs readability. See [benchmarks.md](benchmarks.md).
+- **Allocation in a hot path** — an extra closure, array, or wrapper promise
+  per call. `Promise.try` and `try { new URL() } catch` both allocate where a
+  cheaper form exists (`URL.parse` returns `null` instead of throwing).
+- **Non-standard additions to standard interfaces.** See
+  [semver-and-stability.md](semver-and-stability.md).
+
+### Tests
+
+- Timers used as synchronization; test-suite time inflation; assertions on
+  error messages instead of codes; `mustCall` + `assert.ifError` where
+  `mustSucceed` belongs. See [writing-tests.md](writing-tests.md).
+- A change with no test at all. `Please add a test` is among the most common
+  review comments in the corpus.
+
+### Semver labeling
+
+Check the label against the detectors in
+[semver-and-stability.md](semver-and-stability.md) — property shape, microtask
+timing, tightened validation, error identity. A refactor tangled together with
+a breaking change should be split so the safe half can land.
+
+### Comment conventions
+
+Prefix advisory feedback with `(Non-blocking)` so the author can tell which
+comments gate the approval and which are suggestions. Reviewers who do this get
+faster iterations.
+
 ## References
 
 - [Current contributing policy](https://github.com/nodejs/node/blob/cf882a79042cba4146acfdb7993b6a97c21e7239/CONTRIBUTING.md)
