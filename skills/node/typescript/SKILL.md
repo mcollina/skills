@@ -1,15 +1,38 @@
 ---
-name: typescript
-description: TypeScript configuration and type stripping in Node.js
+name: node-typescript
+description: Node.js TypeScript configuration and native type stripping with --experimental-strip-types (Node.js 22.6+). Covers type-only imports, enum alternatives with const objects, namespace avoidance, constructor parameter properties, TC39 decorators, .ts file extensions in imports, tsconfig.json for noEmit development, tsconfig.build.json for publishing packages with declaration files and rewriteRelativeImportExtensions, package.json exports configuration, and running tests with node --test on TypeScript files. Use when setting up Node.js projects with native TypeScript support, writing Node 22+ TypeScript without ts-node or tsx, configuring type stripping, or building distributable TypeScript packages.
 metadata:
-  tags: typescript, type-stripping, ts-node, configuration
+  tags: node, nodejs, typescript, type-stripping, experimental-strip-types, tsconfig, noemit, enums, namespaces, decorators, package-exports
 ---
 
 # TypeScript in Node.js
 
-## Use Type Stripping
+## TypeScript with Type Stripping
 
-Node.js 22.6+ supports running TypeScript files directly by stripping types at runtime. In Node.js 23.6+ and 24+, type stripping is enabled by default.
+Use **type stripping** (Node.js 22.6+) instead of build tools like ts-node or tsx. Type stripping runs TypeScript directly by removing type annotations at runtime without transpilation.
+
+Key requirements for type stripping compatibility:
+- Use `import type` for type-only imports
+- Use const objects instead of enums
+- Avoid namespaces and parameter properties
+- Use `.ts` extensions in imports
+
+**Minimal example** — a valid type-stripped TypeScript file:
+
+```ts
+// greet.ts
+import type { IncomingMessage } from 'node:http';
+
+const greet = (name: string): string => `Hello, ${name}!`;
+console.log(greet('world'));
+```
+
+Run directly with:
+```bash
+node greet.ts
+```
+
+See [rules/typescript.md](rules/typescript.md) for complete configuration and examples.
 
 ### node.js 20.x and 22.x
 

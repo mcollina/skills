@@ -1,8 +1,8 @@
 ---
-name: environment
-description: Environment configuration and secrets management
+name: node-environment
+description: Node.js environment variable configuration, .env file loading with --env-file flag and process.loadEnvFile(), schema validation with env-schema/TypeBox/Zod, secrets management, feature flags, and configuration patterns. Use when setting up environment variables, validating config at startup, avoiding NODE_ENV antipatterns, managing secrets in production with AWS Secrets Manager/HashiCorp Vault, or structuring typed configuration objects for Node.js applications.
 metadata:
-  tags: environment, configuration, env, secrets
+  tags: node, nodejs, environment, env, dotenv, configuration, secrets, validation, zod, typebox, env-schema, feature-flags
 ---
 
 # Environment Configuration in Node.js

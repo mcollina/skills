@@ -1,8 +1,8 @@
 ---
 name: node-modules-exploration
-description: Navigating and analyzing node_modules directories
+description: Techniques for exploring and analyzing node_modules directories in Node.js projects. Covers finding package versions, navigating directory structure, understanding npm/yarn vs pnpm hoisting differences, locating READMEs correctly, analyzing dependency trees with npm ls, investigating peer dependency conflicts, examining package internals (entry points, TypeScript definitions, source files), and debugging module resolution. Use when troubleshooting dependency issues, understanding installed packages, or investigating node_modules contents.
 metadata:
-  tags: node, nodejs, npm, yarn, pnpm, dependencies, packages
+  tags: node, nodejs, node_modules, npm, yarn, pnpm, dependencies, packages, peer-dependencies, module-resolution
 ---
 
 # Exploring node_modules

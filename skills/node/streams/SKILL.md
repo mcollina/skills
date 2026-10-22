@@ -1,8 +1,8 @@
 ---
-name: streams
-description: Working with Node.js streams
+name: node-streams
+description: Node.js streams patterns including pipeline composition from node:stream/promises, async generator transforms (async function*), CSV/ETL ingestion pipelines, backpressure handling with drain events, Readable.from for iterable streams, stream consumers (text/json/buffer), and readline interfaces. Use when processing large files, building ETL pipelines, transforming data in-stream, handling CSV parsing, or managing backpressure in Node.js applications.
 metadata:
-  tags: streams, readable, writable, transform, pipeline
+  tags: node, nodejs, streams, pipeline, async-generator, transform, readable, writable, backpressure, csv, etl, ingestion
 ---
 
 # Node.js Streams
