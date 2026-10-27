@@ -19,6 +19,7 @@ Current top-level skills include:
 
 - `documentation`
 - `fastify`
+- `hackerone`
 - `init`
 - `linting-neostandard-eslint9`
 - `node`

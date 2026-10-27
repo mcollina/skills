@@ -1,0 +1,11 @@
+{
+  "name": "mcollina/hackerone",
+  "version": "0.1.0",
+  "private": false,
+  "summary": "Fetches and triages HackerOne vulnerability reports with the hackerone CLI, then reproduces and classifies them against the project's threat model, including Node.js security reports.",
+  "skills": {
+    "hackerone": {
+      "path": "SKILL.md"
+    }
+  }
+}

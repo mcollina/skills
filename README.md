@@ -8,6 +8,7 @@ Skills for AI-assisted development.
 |-------|-------------|
 | `documentation` | Technical writer specializing in the Diátaxis documentation framework |
 | `fastify` | Comprehensive best practices for Fastify development |
+| `hackerone` | Fetch and triage HackerOne vulnerability reports against the project threat model |
 | `init` | Creates and maintains high-signal AGENTS.md guidance for repositories |
 | `linting-neostandard-eslint9` | Linting workflows with neostandard and ESLint v9 flat config |
 | `node` | Best practices for Node.js development |
