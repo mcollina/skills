@@ -55,7 +55,16 @@ gh api --method PATCH "$base" "${headers[@]}" -f state=closed
 - Setting `triage` or `withdrawn` returns `422`.
 - Starting a temporary private fork does not move an advisory out of `triage` ([private fork workflow](security-advisory-private-fork-prs.md)).
 - Before closing a report, add a comment explaining the decision ([comments workflow](security-advisory-comments.md)).
+- Close triage reports with the API, not the web interface. This includes duplicates, invalid reports, and reports that will not be pursued.
 - Read the advisory back after each change and report the new `state`.
+
+### Closing a duplicate report
+
+Before you call a report a duplicate, list the repository's advisories in every state and compare root cause, affected code, and attack path against the earlier one. Matching titles are not enough. Then:
+
+1. Comment on the duplicate. Thank the reporter, say an earlier private report covers the same issue and its fix is in progress, and ask them to keep the details private until the advisory is published.
+2. If the earlier advisory is unpublished, do not name its GHSA ID, its reporter, or its private fork in the comment. The duplicate's reporter is not a collaborator on the earlier advisory.
+3. Close the duplicate with `state=closed`. Credit stays with the earlier advisory's reporter.
 
 ## Publishing is public and one-way
 
@@ -82,4 +91,9 @@ Live runs on `mcollina/skills` (October 2 and 17, 2026) with `gh` and an OAuth t
 - PATCH `state=triage` and `state=withdrawn` returned `422` with ``Invalid property /state: `triage` is not a possible value. Must be one of the following: published, closed, draft.``
 - A repository admin cannot submit a private report to their own repository: `POST .../security-advisories/reports` returned `403 You are not authorized to report advisories in this repository via private vulnerability reporting`. Testing `triage` needs a report from a different account.
 
-The `triage` → `draft` and `triage` → `closed` PATCHes and publishing were not live-tested. Never publish a test advisory.
+A live run on November 16, 2026 used a real private vulnerability report, submitted by another account to a public repository, with the same token and headers. The report was a duplicate:
+
+- POST to the advisory's comments endpoint added the triage note while the report was still in `triage`.
+- PATCH `state=closed` moved the report from `triage` to `closed` and set `closed_at`. Reading the advisory back confirmed `state: closed` and kept the comment.
+
+The `triage` → `draft` PATCH, reopening a closed triage report, and publishing were not live-tested. Never publish a test advisory.
